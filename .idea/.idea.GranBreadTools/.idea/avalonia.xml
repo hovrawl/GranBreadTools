@@ -3,6 +3,7 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="GranBreadTracker/App.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/GranBreadTracker/App.axaml" value="GranBreadTracker/GranBreadTracker.Browser/GranBreadTracker.Browser.csproj" />
       </map>
     </option>
