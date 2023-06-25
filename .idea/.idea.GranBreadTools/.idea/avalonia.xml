@@ -10,6 +10,7 @@
         <entry key="GranBreadTracker/Pages/ItemTrackerPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/ItemsPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/SettingsPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
+        <entry key="GranBreadTracker/Styling/GranBreadTrackerStyles.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Styling/Resources.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Views/MainAppSplashContent.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Views/MainView.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
