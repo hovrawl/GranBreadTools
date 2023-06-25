@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
+using GranBreadTracker.Pages;
 
 namespace GranBreadTracker.ViewModels;
 
@@ -12,30 +14,65 @@ public class ItemsPageViewModel : MainPageViewModelBase
         Items = new ObservableCollection<ItemTrackerDef>();
         // Add ItemTrackerDef to collection
 
-        AddDocumentCommand = new GeneralCommand(AddItemDefExecute);
+        AddItemTrackerCommand = new GeneralCommand(AddItemDefExecute);
     }
     
     public ObservableCollection<ItemTrackerDef> Items { get; }
 
-    public GeneralCommand AddDocumentCommand { get; }
+    public GeneralCommand AddItemTrackerCommand { get; }
 
     
     private void AddItemDefExecute(object obj)
     {
-        Items.Add(AddItemTracker(Items.Count));
+        // Pop up item tracker creation dialog 
+        // var newItemTrackerDef = CreateNewItemTracker();
+        CreateNewItemTracker();
+        // if (newItemTrackerDef == null) return;
+        //
+        // Items.Add(newItemTrackerDef);
     }
-    
-    // Add Blank Item tracker
-    private ItemTrackerDef AddItemTracker(int itemCount)
+
+
+    private async void CreateNewItemTracker()
     {
-        // Generate blank item def so it can be customised later
-        var tab = new ItemTrackerDef
+        var dialog = new ContentDialog
         {
-            Header = $"New Item Tracker - {itemCount}",
-            IconSource = new SymbolIconSource { Symbol = Symbol.Document },
-            Description = "New Item Tracker, rename me, give an icon customise Drop Locations."
+            Title = "New Item Tracker",
+            PrimaryButtonText = "Create",
+            CloseButtonText = "Cancel"
         };
 
-        return tab;
+        // Pass the dialog if you need to hide it from the ViewModel.
+        var viewModel = new NewItemTrackerDialogViewModel(dialog);
+
+        // In our case the Content is a UserControl, but can be anything.
+        dialog.Content = new NewItemTrackerDialog()
+        {
+            DataContext = viewModel
+        };
+
+        ItemTrackerDef returnDef = null;
+        var dialogResult = await dialog.ShowAsync();
+        
+        if (dialogResult == ContentDialogResult.Primary)
+        {
+            var newItemDialog = dialog.Content as NewItemTrackerDialog;
+            var newItemViewModel = newItemDialog.DataContext as NewItemTrackerDialogViewModel;
+            var itemName = newItemViewModel.ItemName;
+            if (!string.IsNullOrEmpty(itemName))
+            {
+                var iconSource = newItemViewModel.Icon;
+                returnDef = new ItemTrackerDef
+                {
+                    Header = itemName,
+                    IconSource = iconSource,
+                    Description = "New Item Tracker, rename me, give an icon customise Drop Locations."
+                };
+                Items.Add(returnDef);
+            }
+           
+        }
+        
+        //return returnDef;
     }
 }

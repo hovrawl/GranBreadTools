@@ -81,10 +81,10 @@
     <ui:ImageIconSource x:Key="BlueChestIcon" Source="avares://GranBreadTracker/Assets/Images/General/bluechest.png" />
     <ui:ImageIconSource x:Key="GoldBarIcon" Source="avares://GranBreadTracker/Assets/Images/General/goldbar.png" />
     <ui:ImageIconSource x:Key="GoldBarYoinkIcon" Source="avares://GranBreadTracker/Assets/Images/General/goldbarYoink.png" />
-    <ui:ImageIconSource x:Key="EternitySandIcon" Source="avares://GranBreadTracker/Assets/Images/General/geneternitysand.png" />
+    <ui:ImageIconSource x:Key="EternitySandIcon" Source="avares://GranBreadTracker/Assets/Images/General/eternitysand.png" />
 
     <!-- DropLocationSource -->
-    <ui:ImageIconSource x:Key="PBHLIcon" Source="avares://GranBreadTracker/Assets/Images/pbhl/pbhl.png" />
+    <ui:ImageIconSource x:Key="PBHLIcon" Source="avares://GranBreadTracker/Assets/Images/PBHL/pbhl.png" />
     
     <ui:ImageIconSource x:Key="SourceCodeIcon">
         <ui:ImageIconSource.Source>

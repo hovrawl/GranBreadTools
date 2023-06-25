@@ -9,9 +9,10 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ItemsPageViewModel"
              x:Class="GranBreadTracker.Pages.ItemsPage">
-    <ui:TabView AddTabButtonCommand="{Binding AddDocumentCommand}"
+    <ui:TabView AddTabButtonCommand="{Binding AddItemTrackerCommand}"
                 AddTabButtonCommandParameter="Normal"
                 TabCloseRequested="BindingTabView_TabCloseRequested"
+                TabItemsChanged="TabView_OnTabItemsChanged"
                 TabItems="{Binding Items}">
         <ui:TabView.TabItemTemplate>
             <DataTemplate DataType="classes:ItemTrackerDef">

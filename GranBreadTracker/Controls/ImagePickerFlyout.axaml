@@ -1,0 +1,37 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:GranBreadTracker.ViewModels"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:conv="clr-namespace:GranBreadTracker.Converters"
+             x:DataType="vm:ImagePickerFlyoutModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GranBreadTracker.Controls.ImagePickerFlyout">
+    <UserControl.Resources>
+        <ui:SymbolIconSource x:Key="VolumeIcon" Symbol="Volume" />
+        <ui:SymbolIconSource x:Key="GoIcon" Symbol="ChevronRight" />
+        <conv:ResourceKeyToIconConverter x:Key="ResKeyIconConv" />
+        <conv:StringToBitmapConverter x:Key="StrToBmpConv" />
+    </UserControl.Resources>
+    
+    <StackPanel Orientation="Horizontal">
+        <ListBox Name="ImageList" SelectionChanged="ImageList_OnSelectionChanged" Tapped="ImageList_OnTapped">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="ui:ImageIconSource" >
+                    <!-- <Border Background="Red" CornerRadius="4" Padding="4"> -->
+                    <!--     <Image Source="{Binding}"/> -->
+                    <!-- </Border> -->
+                    <ui:IconSourceElement IconSource="{Binding }" Width="50" Height="50"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <!-- <ListBoxItem> -->
+            <!--     <StackPanel> -->
+            <!--         <TextBlock >Test</TextBlock> -->
+            <!--         <Image Source=""></Image> -->
+            <!--          -->
+            <!--     </StackPanel> -->
+            <!-- </ListBoxItem> -->
+        </ListBox>
+    </StackPanel>
+</UserControl>
