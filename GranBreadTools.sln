@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GranBreadTracker", "GranBreadTracker\GranBreadTracker.csproj", "{3C9B1E5F-C6FA-40F2-9D22-8A30E337AFFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GranBreadTracker", "GranBreadTracker\GranBreadTracker.csproj", "{C95683D6-D437-448F-AC76-5F3E229C48A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3C9B1E5F-C6FA-40F2-9D22-8A30E337AFFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C9B1E5F-C6FA-40F2-9D22-8A30E337AFFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C9B1E5F-C6FA-40F2-9D22-8A30E337AFFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C9B1E5F-C6FA-40F2-9D22-8A30E337AFFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C95683D6-D437-448F-AC76-5F3E229C48A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C95683D6-D437-448F-AC76-5F3E229C48A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C95683D6-D437-448F-AC76-5F3E229C48A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C95683D6-D437-448F-AC76-5F3E229C48A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
