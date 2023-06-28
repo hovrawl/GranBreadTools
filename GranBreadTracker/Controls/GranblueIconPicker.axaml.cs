@@ -16,94 +16,20 @@ namespace GranBreadTracker.Controls;
 
 public partial class GranblueIconPicker : UserControl
 {
-    private ListBox _list;
     private DropDownButton _imageBtn;
-    //public Window MainWindow;
 
-    private ImageIconSource _icon;
-    public ImageIconSource Icon {
-        get => _icon;
-        set
-        {
-            _icon = value;
-            IconChanged?.Invoke(_imageBtn, new IconChangedEventArgs(_icon));
-        }
-    }
-    
-    public EventHandler<IconChangedEventArgs> IconChanged;
     
     public GranblueIconPicker()
     {
         InitializeComponent();
-        
-        _imageBtn = this.FindControl<DropDownButton>("ImageSelector");
-
-        SetupImagePicker(_imageBtn);
     }
 
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
     }
-
-    private void SetupImagePicker(DropDownButton btn)
-    {
-        if(btn == null) return;
-        
-        // Setup image list
-        foreach (var iconName in IconNameList)
-        {
-            if(!App.Current.Resources.TryGetResource(iconName, null, out var icon)) continue;
-            if(icon is not ImageIconSource iconSource) continue;
-            Icons.Add(iconSource);
-        }
-
-        var userIcons = App.Current.Resources.Keys.Where(i => i.ToString().StartsWith("user-icon"));
-        foreach (var iconName in userIcons)
-        {
-            if(!App.Current.Resources.TryGetResource(iconName, null, out var icon)) continue;
-            if(icon is not ImageIconSource iconSource) continue;
-            Icons.Add(iconSource);
-        }
-
-        var firstIcon = Icons.FirstOrDefault();
-        _imageBtn.DataContext = firstIcon;
-        Icon = firstIcon;
-        
-        // setup image flyout
-        var imagePickerFlyout = SetupImagePickerFlyout();
-        btn.Flyout = imagePickerFlyout;
-        
-        
-        
-    }
     
-    private Flyout SetupImagePickerFlyout()
-    {
-        var imagePickerFlyoutModel = new ImagePickerFlyoutModel();
-        
-        var imagePickerFlyout = new ImagePickerFlyout(Icons)
-        {
-            DataContext = imagePickerFlyoutModel,
-        };
-        
-        var returnFlyout = new Flyout
-        {
-            Content = imagePickerFlyout
-        };
-        
-        imagePickerFlyout.ImageListSelectEventHandler += (sender, args) =>
-        {
-            returnFlyout.Hide();
-            var selectedImage = imagePickerFlyout.GetSelectedImage();
-            _imageBtn.DataContext = selectedImage;
-            Icon = selectedImage;
-            //IconChanged?.Invoke(_imageBtn, new IconChangedEventArgs(selectedImage));
-        };
-        
-        return returnFlyout;
-    }
-
+    
     private async void Button_OnClick(object? sender, RoutedEventArgs e)
     {
         // select image from file system to upload into app
@@ -129,16 +55,7 @@ public partial class GranblueIconPicker : UserControl
             }
         }        
     }
-
-    public ImageIconSource GetCurrentIcon()
-    {
-        if (_imageBtn == null) return null;
-        var flyout = _imageBtn.Flyout as Flyout;
-        if (flyout.Content is not ImagePickerFlyout imagePickerFlyout) return null;
-
-        return imagePickerFlyout.GetSelectedImage();
-    }
-
+    
     private void AddImageToPicker(ImageIconSource image)
     {
         if (_imageBtn == null) return;
@@ -146,33 +63,5 @@ public partial class GranblueIconPicker : UserControl
         if (flyout.Content is not ImagePickerFlyout imagePickerFlyout) return;
 
         imagePickerFlyout.AddImage(image);
-    }
-
-    private List<string> IconNameList = new ()
-    {
-        "BlueChestIcon",
-        "GoldBarIcon",
-        "GoldBarYoinkIcon",
-        "EternitySandIcon",
-        "PBHLIcon",
-    };
-
-    public ObservableCollection<ImageIconSource> Icons = new()
-    {
-
-    };
-    
-    public ObservableCollection<ImageIconSource> UserIcons = new()
-    {
-
-    };
-}
-
-public class IconChangedEventArgs : EventArgs
-{
-    public ImageIconSource Icon;
-    public IconChangedEventArgs(ImageIconSource selectedImage)
-    {
-        Icon = selectedImage;
     }
 }

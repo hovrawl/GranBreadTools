@@ -37,18 +37,18 @@ public partial class NewItemTrackerDialog : UserControl
         // Setup icon picker
         if (sender is not GranblueIconPicker iconPicker) return;
 
-        var iconPickerViewModel = new GranblueIconPickerViewModel();
+        var iconPickerViewModel = new GranblueIconPickerViewModel(iconPicker);
 
         var dialogContext = DataContext as NewItemTrackerDialogViewModel;
         
         iconPicker.DataContext = iconPickerViewModel;
 
-        iconPicker.IconChanged += (o, args) =>
+        iconPickerViewModel.IconChanged += (o, args) =>
         {
-            dialogContext.Icon = iconPicker.Icon;
+            dialogContext.Icon = iconPickerViewModel.Icon;
         };
         
-        dialogContext.Icon = iconPicker.Icon;
+        dialogContext.Icon = iconPickerViewModel.Icon;
 
     }
 }
