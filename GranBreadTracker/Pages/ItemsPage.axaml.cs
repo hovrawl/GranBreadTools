@@ -24,7 +24,7 @@ public partial class ItemsPage : UserControl
     private void BindingTabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
     {
         // Remove item from view model
-        (DataContext as ItemsPageViewModel).Items.Remove(args.Item as ItemTrackerDef);
+        (DataContext as ItemsPageViewModel).Items.Remove(args.Item as ItemTrackerPageViewModel);
         
         // Need to save collection back to settings after removal 
         // TODO - Save state of item trackers
@@ -43,4 +43,5 @@ public partial class ItemsPage : UserControl
             }
         }
     }
+
 }

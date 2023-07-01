@@ -2,7 +2,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:GranBreadTracker.ViewModels"
+             xmlns:pages="using:GranBreadTracker.Pages"
+             xmlns:classes="using:GranBreadTracker.Classes"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:ItemTrackerPageViewModel"
              x:Class="GranBreadTracker.Pages.ItemTrackerPage">
-    Item Tracker
+
+    <ui:TabView AddTabButtonCommand="{Binding AddItemSourceCommand}"
+                AddTabButtonCommandParameter="Normal"
+                TabCloseRequested="BindingTabView_TabCloseRequested"
+                TabItemsChanged="TabView_OnTabItemsChanged"
+                TabItems="{Binding Sources}">
+        <ui:TabView.DataTemplates>
+            <DataTemplate DataType="vm:ItemSourcePageViewModel">
+                <pages:ItemTrackerPage DataContext="{Binding}"/>
+            </DataTemplate>
+        </ui:TabView.DataTemplates>
+        <ui:TabView.TabItemTemplate >
+            <classes:ItemSourcePageTemplate />
+        </ui:TabView.TabItemTemplate>
+    </ui:TabView>
 </UserControl>

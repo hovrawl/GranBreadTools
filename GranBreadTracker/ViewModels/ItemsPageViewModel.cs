@@ -11,13 +11,13 @@ public class ItemsPageViewModel : MainPageViewModelBase
     public ItemsPageViewModel()
     {
         // TODO - Load items from storage/settings
-        Items = new ObservableCollection<ItemTrackerDef>();
+        Items = new ObservableCollection<ItemTrackerPageViewModel>();
         // Add ItemTrackerDef to collection
 
         AddItemTrackerCommand = new GeneralCommand(AddItemDefExecute);
     }
     
-    public ObservableCollection<ItemTrackerDef> Items { get; }
+    public ObservableCollection<ItemTrackerPageViewModel> Items { get; }
 
     public GeneralCommand AddItemTrackerCommand { get; }
 
@@ -51,7 +51,6 @@ public class ItemsPageViewModel : MainPageViewModelBase
             DataContext = viewModel
         };
 
-        ItemTrackerDef returnDef = null;
         var dialogResult = await dialog.ShowAsync();
         
         if (dialogResult == ContentDialogResult.Primary)
@@ -62,13 +61,23 @@ public class ItemsPageViewModel : MainPageViewModelBase
             if (!string.IsNullOrEmpty(itemName))
             {
                 var iconSource = newItemViewModel.Icon;
-                returnDef = new ItemTrackerDef
+                var returnDef = new ItemTrackerDef
                 {
-                    Header = itemName,
+                    Name = itemName,
                     IconSource = iconSource,
-                    Description = "New Item Tracker, rename me, give an icon customise Drop Locations."
+                    Description = "New Item Tracker, rename me, give an icon customise Drop Locations.",
+                    Sources = new ObservableCollection<ItemSourceDef>
+                    {
+                        new ItemSourceDef
+                        {
+                            Name = "Source 1",
+                            Description = "The First Source, edit me"
+                        }
+                    }
                 };
-                Items.Add(returnDef);
+                
+                var newVm = new ItemTrackerPageViewModel(returnDef);
+                Items.Add(newVm);
             }
            
         }
