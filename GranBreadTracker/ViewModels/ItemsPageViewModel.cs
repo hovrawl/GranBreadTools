@@ -12,6 +12,7 @@ public class ItemsPageViewModel : MainPageViewModelBase
     {
         // TODO - Load items from storage/settings
         Items = new ObservableCollection<ItemTrackerPageViewModel>();
+        
         // Add ItemTrackerDef to collection
 
         AddItemTrackerCommand = new GeneralCommand(AddItemDefExecute);
@@ -21,15 +22,11 @@ public class ItemsPageViewModel : MainPageViewModelBase
 
     public GeneralCommand AddItemTrackerCommand { get; }
 
-    
+
     private void AddItemDefExecute(object obj)
     {
         // Pop up item tracker creation dialog 
-        // var newItemTrackerDef = CreateNewItemTracker();
         CreateNewItemTracker();
-        // if (newItemTrackerDef == null) return;
-        //
-        // Items.Add(newItemTrackerDef);
     }
 
 
@@ -71,7 +68,8 @@ public class ItemsPageViewModel : MainPageViewModelBase
                         new ItemSourceDef
                         {
                             Name = "Source 1",
-                            Description = "The First Source, edit me"
+                            Description = "The First Source, edit me",
+                            IconSource = iconSource
                         }
                     }
                 };
@@ -82,6 +80,5 @@ public class ItemsPageViewModel : MainPageViewModelBase
            
         }
         
-        //return returnDef;
     }
 }
