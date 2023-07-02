@@ -1,33 +1,32 @@
 ﻿using System.Collections.ObjectModel;
 using FluentAvalonia.UI.Controls;
-using GranBreadTracker.Classes;
 using GranBreadTracker.Pages;
 
 namespace GranBreadTracker.ViewModels;
 
-public class ItemsPageViewModel : MainPageViewModelBase
+public class SourcesPageViewModel : MainPageViewModelBase
 {
-    public ItemsPageViewModel()
+    public SourcesPageViewModel()
     {
         // TODO - Load items from storage/settings
-        Items = new ObservableCollection<ItemDefDialogViewModel>();
+        Sources = new ObservableCollection<SourceDefDialogViewModel>();
         
-        AddItemCommand = new GeneralCommand(ItemDefDialogExecute);
+        AddCommand = new GeneralCommand(SourceDefDialogExecute);
 
     }
     
-    public ObservableCollection<ItemDefDialogViewModel> Items { get; }
+    public ObservableCollection<SourceDefDialogViewModel> Sources { get; }
 
-    public GeneralCommand AddItemCommand { get; }
+    public GeneralCommand AddCommand { get; }
     
-    private void ItemDefDialogExecute(object obj)
+    private void SourceDefDialogExecute(object obj)
     {
         // Pop up item tracker creation dialog 
-        var existing = obj as ItemDefDialogViewModel;
-        ItemDefDialog(existing);
+        var existing = obj as SourceDefDialogViewModel;
+        SourceDefDialog(existing);
     }
     
-    private async void ItemDefDialog(ItemDefDialogViewModel existing)
+    private async void SourceDefDialog(SourceDefDialogViewModel existing)
     {
         var dialog = new ContentDialog
         {
@@ -37,17 +36,17 @@ public class ItemsPageViewModel : MainPageViewModelBase
         };
 
         // Pass the dialog if you need to hide it from the ViewModel.
-        var viewModel = new ItemDefDialogViewModel();
+        var viewModel = new SourceDefDialogViewModel();
         if (existing != null)
         {
             // If editing an existing item, pre-fill details
-            viewModel.ItemName = existing.ItemName;
+            viewModel.SourceName = existing.SourceName;
             viewModel.Icon = existing.Icon;
             dialog.PrimaryButtonText = "Save";
         }
         
         // In our case the Content is a UserControl, but can be anything.
-        dialog.Content = new ItemDefDialog()
+        dialog.Content = new SourceDefDialog()
         {
             DataContext = viewModel
         };
@@ -56,21 +55,20 @@ public class ItemsPageViewModel : MainPageViewModelBase
         
         if (dialogResult == ContentDialogResult.Primary)
         {
-            var newItemDialog = dialog.Content as ItemDefDialog;
-            var newItemViewModel = newItemDialog.DataContext as ItemDefDialogViewModel;
-            var itemName = newItemViewModel.ItemName;
+            var newItemDialog = dialog.Content as SourceDefDialog;
+            var newItemViewModel = newItemDialog.DataContext as SourceDefDialogViewModel;
+            var itemName = newItemViewModel.SourceName;
             if (!string.IsNullOrEmpty(itemName))
             {
                 // If we had added an item and it wasnt existed, add to view model, otherwise it will update
-                if(existing == null) Items.Add(viewModel);
+                if(existing == null) Sources.Add(viewModel);
                 else
                 {
                     // If we were editing an existing model, update its properties
-                    existing.ItemName = viewModel.ItemName;
+                    existing.SourceName = viewModel.SourceName;
                     existing.Icon = viewModel.Icon;
                 }
             }
-           
         }
     }
 }

@@ -40,6 +40,13 @@ public class NavigationFactory : INavigationPageFactory
                 DataContext = target
             };
         }
+        else if (target is TrackerPageViewModel)
+        {
+            return new TrackerPage()
+            {
+                DataContext = target
+            };
+        }
         else if (target is ItemTrackerPageViewModel)
         {
             return new ItemTrackerPage()
@@ -50,6 +57,13 @@ public class NavigationFactory : INavigationPageFactory
         else if (target is ItemsPageViewModel)
         {
             return new ItemsPage()
+            {
+                DataContext = target
+            };
+        }
+        else if (target is SourcesPageViewModel)
+        {
+            return new SourcesPage()
             {
                 DataContext = target
             };

@@ -4,19 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:GranBreadTracker.ViewModels"
              xmlns:controls="using:GranBreadTracker.Controls"
+             x:DataType="vm:SourceDefDialogViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vm:NewItemTrackerDialogViewModel"
-             x:Class="GranBreadTracker.Pages.NewItemTrackerDialog">
+             x:Class="GranBreadTracker.Pages.SourceDefDialog">
     <StackPanel Spacing="10" MinWidth="400" Orientation="Vertical">
         <Label>
-            Item Name
+            Source Name
         </Label>
         <TextBox 
-                 Watermark="Item Name"
-                 Text="{CompiledBinding ItemName}"
-                 AttachedToVisualTree="InputField_OnAttachedToVisualTree" />
+            Watermark="Source Name"
+            Text="{CompiledBinding SourceName}"
+            AttachedToVisualTree="InputField_OnAttachedToVisualTree" />
         
-        <controls:GranblueIconPicker AttachedToVisualTree="IconPicker_OnAttachedToVisualTree"/>
+        <controls:GranblueIconPicker AttachedToVisualTree="IconPicker_OnAttachedToVisualTree" />
         
     </StackPanel>
 </UserControl>

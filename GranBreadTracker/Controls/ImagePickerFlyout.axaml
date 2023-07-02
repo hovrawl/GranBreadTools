@@ -19,19 +19,14 @@
         <ListBox Name="ImageList" SelectionChanged="ImageList_OnSelectionChanged" Tapped="ImageList_OnTapped">
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="ui:ImageIconSource" >
-                    <!-- <Border Background="Red" CornerRadius="4" Padding="4"> -->
-                    <!--     <Image Source="{Binding}"/> -->
-                    <!-- </Border> -->
                     <ui:IconSourceElement IconSource="{Binding }" Width="50" Height="50"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-            <!-- <ListBoxItem> -->
-            <!--     <StackPanel> -->
-            <!--         <TextBlock >Test</TextBlock> -->
-            <!--         <Image Source=""></Image> -->
-            <!--          -->
-            <!--     </StackPanel> -->
-            <!-- </ListBoxItem> -->
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel MaxWidth="300"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
         </ListBox>
     </StackPanel>
 </UserControl>

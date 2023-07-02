@@ -94,9 +94,19 @@ public partial class MainView : UserControl
                 NavHeader = "Home",
                 IconKey = "HomeIcon"
             },
+            new TrackerPageViewModel
+            {
+                NavHeader = "Tracker",
+                IconKey = "CoreControlsIcon"
+            },
             new ItemsPageViewModel
             {
                 NavHeader = "Items",
+                IconKey = "CoreControlsIcon"
+            },
+            new SourcesPageViewModel
+            {
+                NavHeader = "Raids",
                 IconKey = "CoreControlsIcon"
             },
             new SettingsPageViewModel

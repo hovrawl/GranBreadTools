@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Data;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
@@ -19,10 +20,13 @@ public partial class GranblueIconPicker : UserControl
 {
     private DropDownButton _imageBtn;
 
-    
     public GranblueIconPicker()
     {
         InitializeComponent();
+        
+        var iconPickerViewModel = new GranblueIconPickerViewModel(this);
+
+        DataContext = iconPickerViewModel;
     }
 
     private void InitializeComponent()

@@ -1,0 +1,27 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:GranBreadTracker.ViewModels"
+             xmlns:pages="using:GranBreadTracker.Pages"
+             xmlns:classes="using:GranBreadTracker.Classes"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:TrackerPageViewModel"
+             x:Class="GranBreadTracker.Pages.TrackerPage">
+    <ui:TabView AddTabButtonCommand="{Binding AddItemTrackerCommand}"
+                AddTabButtonCommandParameter="Normal"
+                TabCloseRequested="BindingTabView_TabCloseRequested"
+                TabItemsChanged="TabView_OnTabItemsChanged"
+                TabItems="{Binding Items}">
+        <ui:TabView.DataTemplates>
+            <DataTemplate DataType="vm:ItemTrackerPageViewModel">
+                <pages:ItemTrackerPage DataContext="{Binding}"/>
+            </DataTemplate>
+        </ui:TabView.DataTemplates>
+        <ui:TabView.TabItemTemplate >
+            <classes:ItemTrackerPageTemplate />
+        </ui:TabView.TabItemTemplate>
+       
+    </ui:TabView>
+</UserControl>

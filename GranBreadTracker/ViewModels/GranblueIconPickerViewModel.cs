@@ -12,6 +12,11 @@ namespace GranBreadTracker.ViewModels;
 
 public class GranblueIconPickerViewModel : ViewModelBase
 {
+    private GranblueIconPicker _picker;
+    
+    private ListBox _list;
+    private DropDownButton _imageBtn;
+    
     public EventHandler<IconChangedEventArgs> IconChanged;
 
     private ImageIconSource _icon;
@@ -23,11 +28,6 @@ public class GranblueIconPickerViewModel : ViewModelBase
             IconChanged?.Invoke(this, new IconChangedEventArgs(_icon));
         }
     }
-
-    private GranblueIconPicker _picker;
-    
-    private ListBox _list;
-    private DropDownButton _imageBtn;
     
     public GranblueIconPickerViewModel(GranblueIconPicker picker)
     {
@@ -69,8 +69,18 @@ public class GranblueIconPickerViewModel : ViewModelBase
         }
 
         var firstIcon = Icons.FirstOrDefault();
-        Icon = firstIcon;
-        _imageBtn.DataContext = Icon;
+        if (Icon is ImageIconSource btnImage)
+        {
+            _imageBtn.DataContext = btnImage;
+        }
+        else 
+        {
+            // Set default icon if null
+            // Only null if creating new item, edit should be set
+            Icon = firstIcon;
+            _imageBtn.DataContext = firstIcon;
+        }
+       
         
         // setup image flyout
         var imagePickerFlyout = SetupImagePickerFlyout();
@@ -117,6 +127,12 @@ public class GranblueIconPickerViewModel : ViewModelBase
     {
 
     };
+
+    public void SetIcon(ImageIconSource iconSource)
+    {
+        if (_imageBtn == null) return;
+        _imageBtn.DataContext = iconSource;
+    }
 }
 
 public class IconChangedEventArgs : EventArgs

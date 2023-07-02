@@ -9,9 +9,9 @@ using GranBreadTracker.ViewModels;
 
 namespace GranBreadTracker.Pages;
 
-public partial class NewItemTrackerDialog : UserControl
+public partial class ItemDefDialog : UserControl
 {
-    public NewItemTrackerDialog()
+    public ItemDefDialog()
     {
         InitializeComponent();
     }
@@ -39,7 +39,7 @@ public partial class NewItemTrackerDialog : UserControl
         if (sender is not GranblueIconPicker iconPicker) return;
         if (iconPicker.DataContext is not GranblueIconPickerViewModel vm) return;
 
-        var dialogContext = DataContext as NewItemTrackerDialogViewModel;
+        var dialogContext = DataContext as ItemDefDialogViewModel;
 
         vm.IconChanged += (o, args) =>
         {
@@ -50,10 +50,12 @@ public partial class NewItemTrackerDialog : UserControl
         {
             var icon = dialogContext.Icon as ImageIconSource;
             vm.Icon = icon;
-            vm.SetIcon(icon);        }
+            vm.SetIcon(icon);
+        }
         else
         {
             dialogContext.Icon = vm.Icon;
         }
+
     }
 }

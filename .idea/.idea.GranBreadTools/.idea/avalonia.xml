@@ -10,12 +10,17 @@
         <entry key="GranBreadTracker/GranBreadTracker/App.axaml" value="GranBreadTracker/GranBreadTracker.Browser/GranBreadTracker.Browser.csproj" />
         <entry key="GranBreadTracker/Pages/DropSourceTrackerPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/HomePage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
+        <entry key="GranBreadTracker/Pages/ItemDefDialog.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/ItemSourcePage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/ItemTrackerPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/ItemTrackerPageTemplate.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/ItemsPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
+        <entry key="GranBreadTracker/Pages/NewItemDefDialog.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/NewItemTrackerDialog.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/SettingsPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
+        <entry key="GranBreadTracker/Pages/SourceDefDialog.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
+        <entry key="GranBreadTracker/Pages/SourcesPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
+        <entry key="GranBreadTracker/Pages/TrackerPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Styling/GranBreadTrackerStyles.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Styling/Resources.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Views/MainAppSplashContent.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />

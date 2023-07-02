@@ -7,25 +7,24 @@
              xmlns:pages="using:GranBreadTracker.Pages"
              xmlns:classes="using:GranBreadTracker.Classes"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vm:ItemsPageViewModel"
-             x:Class="GranBreadTracker.Pages.ItemsPage">
-    
+             x:DataType="vm:SourcesPageViewModel"
+             x:Class="GranBreadTracker.Pages.SourcesPage">
     <StackPanel Orientation="Horizontal">
-        <ListBox Name="ItemList" ItemsSource="{Binding Items}" SelectionChanged="ItemList_OnSelectionChanged">
+        <ListBox Name="ItemList" ItemsSource="{Binding  Sources}" SelectionChanged="ItemList_OnSelectionChanged">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
-                <DataTemplate x:DataType="vm:ItemDefDialogViewModel" >
-                    <StackPanel Orientation="Vertical" Tapped="Item_OnTapped">
+                <DataTemplate x:DataType="vm:SourceDefDialogViewModel" >
+                    <StackPanel Orientation="Vertical">
                         <ui:IconSourceElement IconSource="{CompiledBinding   Icon}" Width="50" Height="50"/>
-                        <TextBlock Text="{CompiledBinding ItemName}"></TextBlock>
+                        <TextBlock Text="{CompiledBinding SourceName}"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Click="AddItem_OnClick">Add Item</Button>
+        <Button Click="AddSource_OnClick">Add Raid</Button>
     </StackPanel>
 </UserControl>

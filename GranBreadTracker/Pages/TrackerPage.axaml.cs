@@ -1,21 +1,16 @@
 ﻿using System.Collections.Specialized;
-using System.Linq;
-using System.Runtime.Intrinsics.X86;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FluentAvalonia.Core;
 using FluentAvalonia.UI.Controls;
-using GranBreadTracker.Classes;
 using GranBreadTracker.ViewModels;
 
 namespace GranBreadTracker.Pages;
 
-public partial class ItemsPage : UserControl
+public partial class TrackerPage : UserControl
 {
-    public ItemsPage()
+    public TrackerPage()
     {
         InitializeComponent();
     }
@@ -46,37 +41,5 @@ public partial class ItemsPage : UserControl
                 break;
             }
         }
-    }
-
-
-
-    private void Item_OnTapped(object? sender, TappedEventArgs e)
-    {
-        if(DataContext is not ItemsPageViewModel vm) return;
-        if (sender is not ListBoxItem listItem) return;
-        if (listItem.DataContext is not ItemDefDialogViewModel itemDef) return;
-        
-        vm.AddItemCommand.Execute(itemDef);
-    }
-
-    private void AddItem_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if(DataContext is not ItemsPageViewModel vm) return;
-        
-        vm.AddItemCommand.Execute(null);
-
-    }
-
-    private void ItemList_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
-    {
-        if (sender is not ListBox listBox) return;
-        if (DataContext is not ItemsPageViewModel vm) return;
-        if (listBox.SelectedValue is not ItemDefDialogViewModel itemDef) return;
-
-        // Execute Item Def command
-        vm.AddItemCommand.Execute(itemDef);
-
-        // Clear list selection so event can be triggered on every selection
-        listBox.SelectedItems.Clear();
     }
 }
