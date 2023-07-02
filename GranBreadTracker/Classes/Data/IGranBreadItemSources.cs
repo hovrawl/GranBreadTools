@@ -10,7 +10,7 @@ public interface IGranBreadItemSources
 
     IGranBreadItemSources Sources();
     IGranBreadItemSources Save();
-    IGranBreadItemSources Add(ItemSourceDef itemDef);
+    IGranBreadItemSources Upsert(ItemSourceDef itemDef);
     IGranBreadItemSources Remove(ItemSourceDef itemDef);
 
     ItemSourceDef FindById(string id);
@@ -52,7 +52,7 @@ public class GranBreadItemSources : IGranBreadItemSources
 
     public ItemSourceDef FindById(string id)
     {
-        return ItemSourceDefs.Find(i => i.Name.Equals(id));
+        return ItemSourceDefs.Find(i => i.Id.Equals(id));
     }
 
     public List<ItemSourceDef> All()
@@ -79,16 +79,16 @@ public class GranBreadItemSources : IGranBreadItemSources
         return this;
     }
     
-    public IGranBreadItemSources Add(ItemSourceDef itemDef)
+    public IGranBreadItemSources Upsert(ItemSourceDef itemDef)
     {
-        ItemSourceDefs.RemoveAll(i => i.Name.Equals(itemDef.Name));
+        ItemSourceDefs.RemoveAll(i => i.Id.Equals(itemDef.Id));
         ItemSourceDefs.Add(itemDef);
         return this;
     }
     
     public IGranBreadItemSources Remove(ItemSourceDef itemDef)
     {
-        ItemSourceDefs.RemoveAll(i => i.Name.Equals(itemDef.Name));
+        ItemSourceDefs.RemoveAll(i => i.Id.Equals(itemDef.Id));
         return this;
     }
 

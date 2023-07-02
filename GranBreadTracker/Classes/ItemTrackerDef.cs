@@ -10,6 +10,11 @@ namespace GranBreadTracker.Classes;
 public class ItemTrackerDef
 {
     /// <summary>
+    /// Unique Id
+    /// </summary>
+    public string Id { get; set; }
+    
+    /// <summary>
     /// Name of Item Tracker
     /// </summary>
     public string Name { get; set; }

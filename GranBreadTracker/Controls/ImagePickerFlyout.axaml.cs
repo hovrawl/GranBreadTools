@@ -42,9 +42,9 @@ public partial class ImagePickerFlyout : UserControl
         }
     }
 
-    public void AddImage(ImageIconSource image)
+    public void AddImage(GranBreadIcon icon)
     {
-        _imageList?.Items?.Add(image);
+        _imageList?.Items?.Add(icon);
     }
     
     

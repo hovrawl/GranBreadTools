@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
@@ -44,7 +45,10 @@ public class SourcesPageViewModel : MainPageViewModelBase
         };
 
         // Pass the dialog if you need to hide it from the ViewModel.
-        var viewModel = new SourceDefDialogViewModel();
+        var viewModel = new SourceDefDialogViewModel
+        {
+            Id = Guid.NewGuid().ToString()
+        };
         if (existing != null)
         {
             // If editing an existing item, pre-fill details
@@ -69,13 +73,18 @@ public class SourcesPageViewModel : MainPageViewModelBase
             if (!string.IsNullOrEmpty(itemName))
             {
                 // If we had added an item and it wasnt existed, add to view model, otherwise it will update
-                if(existing == null) Sources.Add(viewModel);
+                if (existing == null)
+                {
+                    Sources.Add(viewModel);
+                }
                 else
                 {
                     // If we were editing an existing model, update its properties
                     existing.Name = viewModel.Name;
                     existing.Icon = viewModel.Icon;
                 }
+                DataManager.ItemSources().Upsert(viewModel.ToDef());
+                DataManager.ItemSources().Save();
             }
         }
     }

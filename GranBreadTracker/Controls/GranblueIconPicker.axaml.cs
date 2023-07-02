@@ -12,6 +12,7 @@ using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
+using GranBreadTracker.Classes;
 using GranBreadTracker.ViewModels;
 
 namespace GranBreadTracker.Controls;
@@ -61,19 +62,27 @@ public partial class GranblueIconPicker : UserControl
                 {
                     Source = bitmap
                 };
+                
 
                 var userImageId = $"user-icon-{Guid.NewGuid().ToString()}";
                 App.Current.Resources.Add(userImageId, image);
-
-                AddImageToPicker(image);
+                
+                var icon = new GranBreadIcon
+                {
+                    IconKey = userImageId,
+                    IconSource = image,
+                    IconType = IconType.User
+                };
+                    
+                AddImageToPicker(icon);
             }
         }        
     }
     
-    private void AddImageToPicker(ImageIconSource image)
+    private void AddImageToPicker(GranBreadIcon icon)
     {
         if (DataContext is not GranblueIconPickerViewModel vm) return;
 
-        vm.AddImageToPicker(image);
+        vm.AddImageToPicker(icon);
     }
 }

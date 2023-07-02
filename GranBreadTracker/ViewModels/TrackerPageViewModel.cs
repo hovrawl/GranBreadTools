@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using FluentAvalonia.UI.Controls;
@@ -66,6 +67,7 @@ public class TrackerPageViewModel : MainPageViewModelBase
                 var icon = newItemViewModel.Icon;
                 var returnDef = new ItemTrackerDef
                 {
+                    Id = Guid.NewGuid().ToString(),
                     Name = itemName,
                     Icon = icon,
                     Description = "New Item Tracker, rename me, give an icon customise Drop Locations.",

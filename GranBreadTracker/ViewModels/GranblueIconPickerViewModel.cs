@@ -39,13 +39,13 @@ public class GranblueIconPickerViewModel : ViewModelBase
         SetupImagePicker(_imageBtn);
     }
     
-    public void AddImageToPicker(ImageIconSource image)
+    public void AddImageToPicker(GranBreadIcon icon)
     {
         if (_imageBtn == null) return;
         var flyout = _imageBtn.Flyout as Flyout;
         if (flyout.Content is not ImagePickerFlyout imagePickerFlyout) return;
 
-        imagePickerFlyout.AddImage(image);
+        imagePickerFlyout.AddImage(icon);
     }
     
     

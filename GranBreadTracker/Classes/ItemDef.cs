@@ -7,6 +7,11 @@ namespace GranBreadTracker.Classes;
 public class ItemDef
 {
     /// <summary>
+    /// Unique Id
+    /// </summary>
+    public string Id { get; set; }
+    
+    /// <summary>
     /// Name of Item
     /// </summary>
     public string Name { get; set; }
@@ -29,6 +34,7 @@ public class ItemDef
     {
         return new ItemDefDialogViewModel
         {
+            Id = Id,
             Icon = Icon,
             Name = Name,
             Description = Description

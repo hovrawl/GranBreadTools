@@ -9,7 +9,7 @@ public interface IGranBreadTrackers
     IGranBreadTrackers Initialise(string dataPath);
     IGranBreadTrackers Items();
     IGranBreadTrackers Save();
-    IGranBreadTrackers Add(ItemTrackerDef itemDef);
+    IGranBreadTrackers Upsert(ItemTrackerDef itemDef);
     IGranBreadTrackers Remove(ItemTrackerDef itemDef);
     ItemTrackerDef FindById(string id);
     List<ItemTrackerDef> All();
@@ -47,7 +47,7 @@ public class GranBreadTrackers : IGranBreadTrackers
 
     public ItemTrackerDef FindById(string id)
     {
-        return ItemTrackerDefs.Find(i => i.Name.Equals(id));
+        return ItemTrackerDefs.Find(i => i.Id.Equals(id));
     }
 
     public List<ItemTrackerDef> All()
@@ -74,16 +74,16 @@ public class GranBreadTrackers : IGranBreadTrackers
         return this;
     }
     
-    public IGranBreadTrackers Add(ItemTrackerDef itemDef)
+    public IGranBreadTrackers Upsert(ItemTrackerDef itemDef)
     {
-        ItemTrackerDefs.RemoveAll(i => i.Name.Equals(itemDef.Name));
+        ItemTrackerDefs.RemoveAll(i => i.Id.Equals(itemDef.Id));
         ItemTrackerDefs.Add(itemDef);
         return this;
     }
     
     public IGranBreadTrackers Remove(ItemTrackerDef itemDef)
     {
-        ItemTrackerDefs.RemoveAll(i => i.Name.Equals(itemDef.Name));
+        ItemTrackerDefs.RemoveAll(i => i.Id.Equals(itemDef.Id));
         return this;
     }
 

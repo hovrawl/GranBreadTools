@@ -5,6 +5,23 @@ namespace GranBreadTracker.ViewModels;
 
 public class SourceDefDialogViewModel: ViewModelBase
 {
+    private string _id;
+
+    /// <summary>
+    /// Gets or sets the Item Id
+    /// </summary>
+    public string Id
+    {
+        get => _id;
+        set
+        {
+            if (RaiseAndSetIfChanged(ref _id, value))
+            {
+                HandleNameChange(_id);
+            }
+        }
+    }
+    
     private string _name;
 
     /// <summary>
@@ -70,6 +87,7 @@ public class SourceDefDialogViewModel: ViewModelBase
     {
         return new ItemSourceDef
         {
+            Id = Id,
             Icon = Icon,
             Name = Name,
             Description = Description

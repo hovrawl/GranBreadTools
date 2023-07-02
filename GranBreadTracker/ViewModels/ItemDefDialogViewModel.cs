@@ -5,6 +5,23 @@ namespace GranBreadTracker.ViewModels;
 
 public class ItemDefDialogViewModel : ViewModelBase
 {
+    private string _id;
+
+    /// <summary>
+    /// Gets or sets the Item Id
+    /// </summary>
+    public string Id
+    {
+        get => _id;
+        set
+        {
+            if (RaiseAndSetIfChanged(ref _id, value))
+            {
+                HandleNameChange(_id);
+            }
+        }
+    }
+    
     private string _name;
 
     /// <summary>
@@ -70,6 +87,7 @@ public class ItemDefDialogViewModel : ViewModelBase
     {
         return new ItemDef
         {
+            Id = Id,
             Name = Name,
             Description = Description,
             Icon = Icon

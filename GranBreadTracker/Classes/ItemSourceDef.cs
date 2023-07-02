@@ -7,6 +7,11 @@ namespace GranBreadTracker.Classes;
 public class ItemSourceDef
 {
     /// <summary>
+    /// Unique Id
+    /// </summary>
+    public string Id { get; set; }
+    
+    /// <summary>
     /// Name of Source
     /// </summary>
     public string Name { get; set; }
@@ -29,6 +34,7 @@ public class ItemSourceDef
     {
         return new SourceDefDialogViewModel()
         {
+            Id = Id,
             Icon = Icon,
             Name = Name,
             Description = Description
