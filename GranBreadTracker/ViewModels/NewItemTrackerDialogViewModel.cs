@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAvalonia.UI.Controls;
+using GranBreadTracker.Classes;
 
 namespace GranBreadTracker.ViewModels;
 
@@ -48,12 +49,12 @@ public class NewItemTrackerDialogViewModel : ViewModelBase
         // can use this to check if the item name is already taken and prevent user from creating another tracker
     }
 
-    private IconSource _icon;
+    private GranBreadIcon _icon;
 
     /// <summary>
     /// Gets or sets the Item Name
     /// </summary>
-    public IconSource Icon
+    public GranBreadIcon Icon
     {
         get => _icon;
         set

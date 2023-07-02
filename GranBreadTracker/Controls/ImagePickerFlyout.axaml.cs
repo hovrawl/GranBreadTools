@@ -8,6 +8,7 @@ using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
+using GranBreadTracker.Classes;
 
 namespace GranBreadTracker.Controls;
 
@@ -18,7 +19,7 @@ public partial class ImagePickerFlyout : UserControl
     public EventHandler<SelectionChangedEventArgs> ImageListSelectionChangedEventArgs;
     public EventHandler<EventArgs> ImageListSelectEventHandler;
 
-    public ImagePickerFlyout(ICollection<ImageIconSource> preloadIcons)
+    public ImagePickerFlyout(ICollection<GranBreadIcon> preloadIcons)
     {
         InitializeComponent();
 
@@ -32,7 +33,7 @@ public partial class ImagePickerFlyout : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-    private void PreloadImageList(ICollection<ImageIconSource> preloadIcons)
+    private void PreloadImageList(ICollection<GranBreadIcon> preloadIcons)
     {
         if (preloadIcons == null) return;
         foreach (var icon in preloadIcons)
@@ -67,8 +68,8 @@ public partial class ImagePickerFlyout : UserControl
         _imageList.SelectedValue = icon;
     }
 
-    public ImageIconSource GetSelectedImage()
+    public GranBreadIcon GetSelectedImage()
     {
-        return _imageList.SelectedValue as ImageIconSource;
+        return _imageList.SelectedValue as GranBreadIcon;
     }
 }

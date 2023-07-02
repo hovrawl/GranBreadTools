@@ -1,0 +1,10 @@
+[
+  {
+    "Name": "Gold Bar",
+    "Description": "Gold Bar",
+    "Icon" : {
+      "IconKey": "GoldBarIcon",
+      "IconType": 1
+    }
+  }
+]

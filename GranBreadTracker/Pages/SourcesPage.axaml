@@ -19,8 +19,8 @@
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="vm:SourceDefDialogViewModel" >
                     <StackPanel Orientation="Vertical">
-                        <ui:IconSourceElement IconSource="{CompiledBinding   Icon}" Width="50" Height="50"/>
-                        <TextBlock Text="{CompiledBinding SourceName}"></TextBlock>
+                        <ui:IconSourceElement IconSource="{CompiledBinding   Icon.IconSource}" Width="50" Height="50"/>
+                        <TextBlock Text="{CompiledBinding Name}"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

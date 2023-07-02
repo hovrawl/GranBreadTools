@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
@@ -19,7 +20,7 @@ public class ItemTrackerPageViewModel : ViewModelBase
         AddItemSourceCommand = new GeneralCommand(AddItemSoureExecute);
 
         Sources = new ObservableCollection<ItemSourcePageViewModel>();
-
+        
         ItemTrackerDef = trackerDef;
 
         var sourceVms = ItemTrackerDef.GenerateSourceViewModels();
@@ -63,7 +64,7 @@ public class ItemTrackerPageViewModel : ViewModelBase
                 var returnDef = new ItemSourceDef
                 {
                     Name = itemName,
-                    IconSource = iconSource,
+                    Icon = iconSource,
                     Description = "New Item Source, rename me, give an icon customise Drop Locations.",
                 };
                 

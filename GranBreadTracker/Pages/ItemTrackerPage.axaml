@@ -6,6 +6,7 @@
              xmlns:vm="using:GranBreadTracker.ViewModels"
              xmlns:pages="using:GranBreadTracker.Pages"
              xmlns:classes="using:GranBreadTracker.Classes"
+             xmlns:templates="clr-namespace:GranBreadTracker.Classes.Templates"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ItemTrackerPageViewModel"
              x:Class="GranBreadTracker.Pages.ItemTrackerPage">
@@ -21,7 +22,7 @@
             </DataTemplate>
         </ui:TabView.DataTemplates>
         <ui:TabView.TabItemTemplate >
-            <classes:ItemSourcePageTemplate />
+            <templates:ItemSourcePageTemplate />
         </ui:TabView.TabItemTemplate>
     </ui:TabView>
 </UserControl>

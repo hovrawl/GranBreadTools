@@ -5,23 +5,23 @@ using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Pages;
 using GranBreadTracker.ViewModels;
 
-namespace GranBreadTracker.Classes;
+namespace GranBreadTracker.Classes.Templates;
 
-public class ItemSourcePageTemplate : IDataTemplate
+public class ItemTrackerPageTemplate : IDataTemplate
 {
     [Content]
     public object? Content { get; set; }
     
     [DataType]
-    public ItemSourcePageViewModel DataContext { get; set; }
+    public ItemTrackerPageViewModel DataContext { get; set; }
     
     public Control? Build(object? param)
     {
         // build the control to display
-        var vm = param as ItemSourcePageViewModel;
+        var vm = param as ItemTrackerPageViewModel;
         DataContext = vm;
 
-        var itemSourcePage = new ItemSourcePage
+        var itemTrackerPage = new ItemTrackerPage
         {
             DataContext = vm
         };
@@ -29,10 +29,10 @@ public class ItemSourcePageTemplate : IDataTemplate
         // Setup Tab Item
         var tabItem = new TabViewItem
         {
-            Header = vm.Source.Name,
-            IconSource = vm.Source.IconSource,
+            Header = vm.ItemTrackerDef.Name,
+            IconSource = vm.ItemTrackerDef.Icon.IconSource,
             // Content of the tab item is the item source page
-            Content = itemSourcePage
+            Content = itemTrackerPage
         };
 
         return tabItem;
@@ -41,6 +41,6 @@ public class ItemSourcePageTemplate : IDataTemplate
     public bool Match(object? data)
     {
         // Check if we can accept the provided data
-        return data is ItemSourcePageViewModel;
+        return data is ItemTrackerPageViewModel;
     }
 }

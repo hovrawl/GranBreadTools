@@ -1,4 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Platform;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
 using GranBreadTracker.Pages;
@@ -9,9 +18,18 @@ public class ItemsPageViewModel : MainPageViewModelBase
 {
     public ItemsPageViewModel()
     {
-        // TODO - Load items from storage/settings
+        // Load items from storage/settings
         Items = new ObservableCollection<ItemDefDialogViewModel>();
-        
+        if (App.Current.Resources.TryGetResource("Items", null, out var items))
+        {
+            if (items is List<ItemDef> itemDefs)
+            {
+                foreach (var item in itemDefs)
+                {
+                    Items.Add(item.ToViewModel());
+                }
+            }
+        }
         AddItemCommand = new GeneralCommand(ItemDefDialogExecute);
 
     }
@@ -41,7 +59,7 @@ public class ItemsPageViewModel : MainPageViewModelBase
         if (existing != null)
         {
             // If editing an existing item, pre-fill details
-            viewModel.ItemName = existing.ItemName;
+            viewModel.Name = existing.Name;
             viewModel.Icon = existing.Icon;
             dialog.PrimaryButtonText = "Save";
         }
@@ -58,7 +76,7 @@ public class ItemsPageViewModel : MainPageViewModelBase
         {
             var newItemDialog = dialog.Content as ItemDefDialog;
             var newItemViewModel = newItemDialog.DataContext as ItemDefDialogViewModel;
-            var itemName = newItemViewModel.ItemName;
+            var itemName = newItemViewModel.Name;
             if (!string.IsNullOrEmpty(itemName))
             {
                 // If we had added an item and it wasnt existed, add to view model, otherwise it will update
@@ -66,11 +84,55 @@ public class ItemsPageViewModel : MainPageViewModelBase
                 else
                 {
                     // If we were editing an existing model, update its properties
-                    existing.ItemName = viewModel.ItemName;
+                    existing.Name = viewModel.Name;
                     existing.Icon = viewModel.Icon;
                 }
+                
+                SaveItems();
             }
            
         }
+    }
+
+    private void SaveItems()
+    {
+        Stream stream = null;
+        try
+        {
+            var items = Items.Select(item => item.ToDef()).ToList();
+            var text = JsonSerializer.Serialize(items);
+            
+            var uri = new Uri("avares://GranBreadTracker/Assets/Data/Items.json");
+            stream = AssetLoader.Open(uri);
+
+            //var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            //var filePath = uri.LocalPath;
+            //var writePath = Path.Combine(baseDirectory, filePath);
+            //var writePath = $"{AppDomain.CurrentDomain.BaseDirectory}/{filePath}";
+            //File.WriteAllText(writePath,text);
+            // stream.Write(writeStream);
+
+            // var file = TopLevel.GetTopLevel(new Window()).StorageProvider.TryGetFileFromPathAsync(uri);
+            //
+            // var writeStream = JsonSerializer.SerializeToUtf8Bytes(items);
+            // var writeFile = file.Result.OpenWriteAsync();
+            // var writeFileResult =  writeFile.Result;
+            // writeFileResult.Write(writeStream);
+
+
+            stream.WriteAsync(new byte[] {});
+            var writer = new StreamWriter(stream);
+            writer.Write(text);
+            writer.Dispose();
+        }
+        catch
+        {
+
+        }
+        finally
+        {
+            stream?.Dispose();
+        }
+        
     }
 }

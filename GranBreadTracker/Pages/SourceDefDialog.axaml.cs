@@ -48,7 +48,7 @@ public partial class SourceDefDialog : UserControl
         
         if (dialogContext.Icon != null)
         {
-            var icon = dialogContext.Icon as ImageIconSource;
+            var icon = dialogContext.Icon;
             vm.Icon = icon;
             vm.SetIcon(icon);
         }

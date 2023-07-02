@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
@@ -10,9 +11,18 @@ public class TrackerPageViewModel : MainPageViewModelBase
 {
     public TrackerPageViewModel()
     {
-        // TODO - Load items from storage/settings
+        // Load items from storage/settings
         Items = new ObservableCollection<ItemTrackerPageViewModel>();
-        
+        if (App.Current.Resources.TryGetResource("Tracker", null, out var sources))
+        {
+            if (sources is List<ItemTrackerDef> sourceDefs)
+            {
+                foreach (var itemSource in sourceDefs)
+                {
+                    Items.Add(itemSource.ToViewModel());
+                }
+            }
+        }
         // Add ItemTrackerDef to collection
 
         AddItemTrackerCommand = new GeneralCommand(AddItemDefExecute);
@@ -57,11 +67,11 @@ public class TrackerPageViewModel : MainPageViewModelBase
             var itemName = newItemViewModel.ItemName;
             if (!string.IsNullOrEmpty(itemName))
             {
-                var iconSource = newItemViewModel.Icon;
+                var icon = newItemViewModel.Icon;
                 var returnDef = new ItemTrackerDef
                 {
                     Name = itemName,
-                    IconSource = iconSource,
+                    Icon = icon,
                     Description = "New Item Tracker, rename me, give an icon customise Drop Locations.",
                     Sources = new ObservableCollection<ItemSourceDef>
                     {
@@ -69,7 +79,7 @@ public class TrackerPageViewModel : MainPageViewModelBase
                         {
                             Name = "Source 1",
                             Description = "The First Source, edit me",
-                            IconSource = iconSource
+                            Icon = icon
                         }
                     }
                 };

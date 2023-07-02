@@ -13,7 +13,7 @@
         </Label>
         <TextBox 
             Watermark="Source Name"
-            Text="{CompiledBinding SourceName}"
+            Text="{CompiledBinding Name}"
             AttachedToVisualTree="InputField_OnAttachedToVisualTree" />
         
         <controls:GranblueIconPicker AttachedToVisualTree="IconPicker_OnAttachedToVisualTree" />

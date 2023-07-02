@@ -1,32 +1,50 @@
 ﻿using FluentAvalonia.UI.Controls;
+using GranBreadTracker.Classes;
 
 namespace GranBreadTracker.ViewModels;
 
 public class SourceDefDialogViewModel: ViewModelBase
 {
-    private string _itemName;
+    private string _name;
 
     /// <summary>
     /// Gets or sets the Item Name
     /// </summary>
-    public string SourceName
+    public string Name
     {
-        get => _itemName;
+        get => _name;
         set
         {
-            if (RaiseAndSetIfChanged(ref _itemName, value))
+            if (RaiseAndSetIfChanged(ref _name, value))
             {
-                HandleUserInput(_itemName);
+                HandleNameChange(_name);
             }
         }
     }
     
-    private IconSource _icon;
+    private string _description;
 
     /// <summary>
-    /// Gets or sets the Item Name
+    /// Gets or sets the Item Description
     /// </summary>
-    public IconSource Icon
+    public string Description
+    {
+        get => _description;
+        set
+        {
+            if (RaiseAndSetIfChanged(ref _description, value))
+            {
+                HandleDescriptionChange(_description);
+            }
+        }
+    }
+    
+    private GranBreadIcon _icon;
+
+    /// <summary>
+    /// Gets or sets the GranBreadIcon
+    /// </summary>
+    public GranBreadIcon Icon
     {
         get => _icon;
         set
@@ -38,8 +56,23 @@ public class SourceDefDialogViewModel: ViewModelBase
         }
     }
     
-    private void HandleUserInput(string sourceName)
+    private void HandleNameChange(string newValue)
     {
         // can use this to check if the item name is already taken and prevent user from creating another tracker
+    }
+    
+    private void HandleDescriptionChange(string newValue)
+    {
+        // can use this to check if the item name is already taken and prevent user from creating another tracker
+    }
+
+    public ItemSourceDef ToDef()
+    {
+        return new ItemSourceDef
+        {
+            Icon = Icon,
+            Name = Name,
+            Description = Description
+        };
     }
 }

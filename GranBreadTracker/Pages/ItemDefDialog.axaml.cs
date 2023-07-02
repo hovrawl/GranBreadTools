@@ -4,6 +4,7 @@ using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using FluentAvalonia.UI.Controls;
+using GranBreadTracker.Classes;
 using GranBreadTracker.Controls;
 using GranBreadTracker.ViewModels;
 
@@ -48,7 +49,7 @@ public partial class ItemDefDialog : UserControl
         
         if (dialogContext.Icon != null)
         {
-            var icon = dialogContext.Icon as ImageIconSource;
+            var icon = dialogContext.Icon;
             vm.Icon = icon;
             vm.SetIcon(icon);
         }

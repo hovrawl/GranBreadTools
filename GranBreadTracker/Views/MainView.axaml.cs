@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
@@ -60,7 +62,10 @@ public partial class MainView : UserControl
 
         FrameView.Navigated += OnFrameViewNavigated;
         NavView.ItemInvoked += OnNavigationViewItemInvoked;
-        NavView.BackRequested += OnNavigationViewBackRequested;        
+        NavView.BackRequested += OnNavigationViewBackRequested;      
+        
+        // Load Items
+        LoadData();
     }
 
     protected override void OnLoaded()
@@ -359,4 +364,58 @@ public partial class MainView : UserControl
     }
 
     private bool _isDesktop;
+
+    private void LoadData()
+    {
+        Stream stream = null;
+        try
+        {
+            stream = AssetLoader.Open(new Uri("avares://GranBreadTracker/Assets/Data/Items.json"));
+            var items = JsonSerializer.Deserialize<List<ItemDef>>(stream);
+            foreach (var item in items)
+            {
+                // Populate the iconSource for each item
+                if(item.Icon == null || string.IsNullOrEmpty(item.Icon.IconKey)) continue;
+                if (!App.Current.Resources.TryGetResource(item.Icon.IconKey, null, out var icon)) continue;
+                if (icon is not ImageIconSource iconSource) continue;
+                item.Icon.IconSource = iconSource;
+            }
+
+            stream = AssetLoader.Open(new Uri("avares://GranBreadTracker/Assets/Data/Sources.json"));
+            var sources = JsonSerializer.Deserialize<List<ItemSourceDef>>(stream);
+            foreach (var source in sources)
+            {
+                // Populate the iconSource for each source
+                if(source.Icon == null || string.IsNullOrEmpty(source.Icon.IconKey)) continue;
+                if (!App.Current.Resources.TryGetResource(source.Icon.IconKey, null, out var icon)) continue;
+                if (icon is not ImageIconSource iconSource) continue;
+                source.Icon.IconSource = iconSource;
+            }
+            
+            stream = AssetLoader.Open(new Uri("avares://GranBreadTracker/Assets/Data/Tracker.json"));
+            var trackers = JsonSerializer.Deserialize<List<ItemTrackerDef>>(stream);
+            foreach (var tracker in trackers)
+            {
+                // Populate the iconSource for each source
+                if(tracker.Icon == null || string.IsNullOrEmpty(tracker.Icon.IconKey)) continue;
+                if (!App.Current.Resources.TryGetResource(tracker.Icon.IconKey, null, out var icon)) continue;
+                if (icon is not ImageIconSource iconSource) continue;
+                tracker.Icon.IconSource = iconSource;
+            }
+            
+            App.Current.Resources.Add("Items", items);
+            App.Current.Resources.Add("Sources", sources);
+            App.Current.Resources.Add("Trackers", trackers);
+        }
+        catch
+        {
+
+        }
+        finally
+        {
+            stream?.Dispose();
+        }
+      
+
+    }
 }

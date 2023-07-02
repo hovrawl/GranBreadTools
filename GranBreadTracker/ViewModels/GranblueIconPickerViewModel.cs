@@ -6,6 +6,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using FluentAvalonia.UI.Controls;
+using GranBreadTracker.Classes;
 using GranBreadTracker.Controls;
 
 namespace GranBreadTracker.ViewModels;
@@ -19,8 +20,8 @@ public class GranblueIconPickerViewModel : ViewModelBase
     
     public EventHandler<IconChangedEventArgs> IconChanged;
 
-    private ImageIconSource _icon;
-    public ImageIconSource Icon {
+    private GranBreadIcon _icon;
+    public GranBreadIcon Icon {
         get => _icon;
         set
         {
@@ -57,7 +58,7 @@ public class GranblueIconPickerViewModel : ViewModelBase
         {
             if(!App.Current.Resources.TryGetResource(iconName, null, out var icon)) continue;
             if(icon is not ImageIconSource iconSource) continue;
-            Icons.Add(iconSource);
+            Icons.Add(new GranBreadIcon(iconSource, iconName as string, IconType.Item));
         }
 
         var userIcons = App.Current.Resources.Keys.Where(i => i.ToString().StartsWith("user-icon"));
@@ -65,13 +66,13 @@ public class GranblueIconPickerViewModel : ViewModelBase
         {
             if(!App.Current.Resources.TryGetResource(iconName, null, out var icon)) continue;
             if(icon is not ImageIconSource iconSource) continue;
-            Icons.Add(iconSource);
+            Icons.Add(new GranBreadIcon(iconSource, iconName as string, IconType.User));
         }
 
         var firstIcon = Icons.FirstOrDefault();
-        if (Icon is ImageIconSource btnImage)
+        if (Icon is not null)
         {
-            _imageBtn.DataContext = btnImage;
+            _imageBtn.DataContext = Icon;
         }
         else 
         {
@@ -118,17 +119,17 @@ public class GranblueIconPickerViewModel : ViewModelBase
         "PBHLIcon",
     };
 
-    public ObservableCollection<ImageIconSource> Icons = new()
+    public ObservableCollection<GranBreadIcon> Icons = new()
     {
 
     };
     
-    public ObservableCollection<ImageIconSource> UserIcons = new()
+    public ObservableCollection<GranBreadIcon> UserIcons = new()
     {
 
     };
 
-    public void SetIcon(ImageIconSource iconSource)
+    public void SetIcon(GranBreadIcon iconSource)
     {
         if (_imageBtn == null) return;
         _imageBtn.DataContext = iconSource;
@@ -137,8 +138,8 @@ public class GranblueIconPickerViewModel : ViewModelBase
 
 public class IconChangedEventArgs : EventArgs
 {
-    public ImageIconSource Icon;
-    public IconChangedEventArgs(ImageIconSource selectedImage)
+    public GranBreadIcon Icon;
+    public IconChangedEventArgs(GranBreadIcon selectedImage)
     {
         Icon = selectedImage;
     }

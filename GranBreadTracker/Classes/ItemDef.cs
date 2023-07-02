@@ -4,10 +4,10 @@ using GranBreadTracker.ViewModels;
 
 namespace GranBreadTracker.Classes;
 
-public class ItemSourceDef
+public class ItemDef
 {
     /// <summary>
-    /// Name of Source
+    /// Name of Item
     /// </summary>
     public string Name { get; set; }
 
@@ -15,7 +15,7 @@ public class ItemSourceDef
     /// Item Description
     /// </summary>
     public string Description { get; set; }
-    
+
     /// <summary>
     /// GranBreadIcon def that includes ItemKey and ItemType
     /// </summary>
@@ -25,9 +25,9 @@ public class ItemSourceDef
     /// Get this item as a view model
     /// </summary>
     /// <returns></returns>
-    public SourceDefDialogViewModel ToViewModel()
+    public ItemDefDialogViewModel ToViewModel()
     {
-        return new SourceDefDialogViewModel()
+        return new ItemDefDialogViewModel
         {
             Icon = Icon,
             Name = Name,

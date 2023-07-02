@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using FluentAvalonia.UI.Controls;
+using GranBreadTracker.Classes;
 using GranBreadTracker.Pages;
 
 namespace GranBreadTracker.ViewModels;
@@ -8,8 +10,18 @@ public class SourcesPageViewModel : MainPageViewModelBase
 {
     public SourcesPageViewModel()
     {
-        // TODO - Load items from storage/settings
+        // Load items from storage/settings
         Sources = new ObservableCollection<SourceDefDialogViewModel>();
+        if (App.Current.Resources.TryGetResource("Sources", null, out var sources))
+        {
+            if (sources is List<ItemSourceDef> sourceDefs)
+            {
+                foreach (var itemSource in sourceDefs)
+                {
+                    Sources.Add(itemSource.ToViewModel());
+                }
+            }
+        }
         
         AddCommand = new GeneralCommand(SourceDefDialogExecute);
 
@@ -40,7 +52,7 @@ public class SourcesPageViewModel : MainPageViewModelBase
         if (existing != null)
         {
             // If editing an existing item, pre-fill details
-            viewModel.SourceName = existing.SourceName;
+            viewModel.Name = existing.Name;
             viewModel.Icon = existing.Icon;
             dialog.PrimaryButtonText = "Save";
         }
@@ -57,7 +69,7 @@ public class SourcesPageViewModel : MainPageViewModelBase
         {
             var newItemDialog = dialog.Content as SourceDefDialog;
             var newItemViewModel = newItemDialog.DataContext as SourceDefDialogViewModel;
-            var itemName = newItemViewModel.SourceName;
+            var itemName = newItemViewModel.Name;
             if (!string.IsNullOrEmpty(itemName))
             {
                 // If we had added an item and it wasnt existed, add to view model, otherwise it will update
@@ -65,7 +77,7 @@ public class SourcesPageViewModel : MainPageViewModelBase
                 else
                 {
                     // If we were editing an existing model, update its properties
-                    existing.SourceName = viewModel.SourceName;
+                    existing.Name = viewModel.Name;
                     existing.Icon = viewModel.Icon;
                 }
             }
