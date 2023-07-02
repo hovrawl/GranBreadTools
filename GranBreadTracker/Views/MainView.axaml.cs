@@ -21,6 +21,8 @@ using FluentAvalonia.UI.Media.Animation;
 using FluentAvalonia.UI.Navigation;
 using FluentAvalonia.UI.Windowing;
 using GranBreadTracker.Classes;
+using GranBreadTracker.Classes.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace GranBreadTracker.Views;
 
@@ -367,11 +369,13 @@ public partial class MainView : UserControl
 
     private void LoadData()
     {
-        Stream stream = null;
         try
         {
-            stream = AssetLoader.Open(new Uri("avares://GranBreadTracker/Assets/Data/Items.json"));
-            var items = JsonSerializer.Deserialize<List<ItemDef>>(stream);
+            DataManager.Initialise();
+            var items = DataManager.Items().All();
+            var sources = DataManager.ItemSources().All();
+            var trackers = DataManager.ItemTrackerDefs().All();
+            
             foreach (var item in items)
             {
                 // Populate the iconSource for each item
@@ -381,8 +385,6 @@ public partial class MainView : UserControl
                 item.Icon.IconSource = iconSource;
             }
 
-            stream = AssetLoader.Open(new Uri("avares://GranBreadTracker/Assets/Data/Sources.json"));
-            var sources = JsonSerializer.Deserialize<List<ItemSourceDef>>(stream);
             foreach (var source in sources)
             {
                 // Populate the iconSource for each source
@@ -392,8 +394,6 @@ public partial class MainView : UserControl
                 source.Icon.IconSource = iconSource;
             }
             
-            stream = AssetLoader.Open(new Uri("avares://GranBreadTracker/Assets/Data/Tracker.json"));
-            var trackers = JsonSerializer.Deserialize<List<ItemTrackerDef>>(stream);
             foreach (var tracker in trackers)
             {
                 // Populate the iconSource for each source
@@ -411,11 +411,5 @@ public partial class MainView : UserControl
         {
 
         }
-        finally
-        {
-            stream?.Dispose();
-        }
-      
-
     }
 }

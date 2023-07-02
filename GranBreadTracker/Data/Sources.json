@@ -1,0 +1,10 @@
+[
+  {
+    "Name": "Bahamut",
+    "Description": "Ultimate Bahamut Raid",
+    "Icon" : {
+      "IconKey": "PBHLIcon",
+      "IconType": 2
+    }
+  }
+]

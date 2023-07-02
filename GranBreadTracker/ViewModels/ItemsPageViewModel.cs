@@ -10,7 +10,9 @@ using Avalonia.Controls;
 using Avalonia.Platform;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
+using GranBreadTracker.Classes.Data;
 using GranBreadTracker.Pages;
+using Microsoft.Extensions.Configuration;
 
 namespace GranBreadTracker.ViewModels;
 
@@ -20,15 +22,10 @@ public class ItemsPageViewModel : MainPageViewModelBase
     {
         // Load items from storage/settings
         Items = new ObservableCollection<ItemDefDialogViewModel>();
-        if (App.Current.Resources.TryGetResource("Items", null, out var items))
+        var items = DataManager.Items().All();
+        foreach (var item in items)
         {
-            if (items is List<ItemDef> itemDefs)
-            {
-                foreach (var item in itemDefs)
-                {
-                    Items.Add(item.ToViewModel());
-                }
-            }
+            Items.Add(item.ToViewModel());
         }
         AddItemCommand = new GeneralCommand(ItemDefDialogExecute);
 
@@ -80,7 +77,12 @@ public class ItemsPageViewModel : MainPageViewModelBase
             if (!string.IsNullOrEmpty(itemName))
             {
                 // If we had added an item and it wasnt existed, add to view model, otherwise it will update
-                if(existing == null) Items.Add(viewModel);
+                if (existing == null)
+                {
+                    Items.Add(viewModel);
+                    DataManager.Items().Add(viewModel.ToDef());
+
+                }
                 else
                 {
                     // If we were editing an existing model, update its properties
@@ -96,43 +98,11 @@ public class ItemsPageViewModel : MainPageViewModelBase
 
     private void SaveItems()
     {
-        Stream stream = null;
         try
         {
-            var items = Items.Select(item => item.ToDef()).ToList();
-            var text = JsonSerializer.Serialize(items);
-            
-            var uri = new Uri("avares://GranBreadTracker/Assets/Data/Items.json");
-            stream = AssetLoader.Open(uri);
-
-            //var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            //var filePath = uri.LocalPath;
-            //var writePath = Path.Combine(baseDirectory, filePath);
-            //var writePath = $"{AppDomain.CurrentDomain.BaseDirectory}/{filePath}";
-            //File.WriteAllText(writePath,text);
-            // stream.Write(writeStream);
-
-            // var file = TopLevel.GetTopLevel(new Window()).StorageProvider.TryGetFileFromPathAsync(uri);
-            //
-            // var writeStream = JsonSerializer.SerializeToUtf8Bytes(items);
-            // var writeFile = file.Result.OpenWriteAsync();
-            // var writeFileResult =  writeFile.Result;
-            // writeFileResult.Write(writeStream);
-
-
-            stream.WriteAsync(new byte[] {});
-            var writer = new StreamWriter(stream);
-            writer.Write(text);
-            writer.Dispose();
+            DataManager.Items().Save();
         }
         catch
-        {
-
-        }
-        finally
-        {
-            stream?.Dispose();
-        }
-        
+        { /* */ }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
+using GranBreadTracker.Classes.Data;
 using GranBreadTracker.Pages;
 
 namespace GranBreadTracker.ViewModels;
@@ -13,18 +14,13 @@ public class TrackerPageViewModel : MainPageViewModelBase
     {
         // Load items from storage/settings
         Items = new ObservableCollection<ItemTrackerPageViewModel>();
-        if (App.Current.Resources.TryGetResource("Tracker", null, out var sources))
+        var itemTrackerDefs = DataManager.ItemTrackerDefs().All();
+        foreach (var trackerDef in itemTrackerDefs)
         {
-            if (sources is List<ItemTrackerDef> sourceDefs)
-            {
-                foreach (var itemSource in sourceDefs)
-                {
-                    Items.Add(itemSource.ToViewModel());
-                }
-            }
+            Items.Add(trackerDef.ToViewModel());
         }
+        
         // Add ItemTrackerDef to collection
-
         AddItemTrackerCommand = new GeneralCommand(AddItemDefExecute);
     }
     

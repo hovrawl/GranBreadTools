@@ -3,11 +3,13 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using GranBreadTracker.ViewModels;
 using GranBreadTracker.Views;
+using Microsoft.Extensions.Configuration;
 
 namespace GranBreadTracker;
 
 public partial class App : Application
 {
+    
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);

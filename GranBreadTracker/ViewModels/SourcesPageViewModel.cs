@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
+using GranBreadTracker.Classes.Data;
 using GranBreadTracker.Pages;
 
 namespace GranBreadTracker.ViewModels;
@@ -12,15 +13,10 @@ public class SourcesPageViewModel : MainPageViewModelBase
     {
         // Load items from storage/settings
         Sources = new ObservableCollection<SourceDefDialogViewModel>();
-        if (App.Current.Resources.TryGetResource("Sources", null, out var sources))
+        var sourceDefs = DataManager.ItemSources().All();
+        foreach (var itemSource in sourceDefs)
         {
-            if (sources is List<ItemSourceDef> sourceDefs)
-            {
-                foreach (var itemSource in sourceDefs)
-                {
-                    Sources.Add(itemSource.ToViewModel());
-                }
-            }
+            Sources.Add(itemSource.ToViewModel());
         }
         
         AddCommand = new GeneralCommand(SourceDefDialogExecute);
