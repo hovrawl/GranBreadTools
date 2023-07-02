@@ -38,6 +38,15 @@ public class GranblueIconPickerViewModel : ViewModelBase
         SetupImagePicker(_imageBtn);
     }
     
+    public void AddImageToPicker(ImageIconSource image)
+    {
+        if (_imageBtn == null) return;
+        var flyout = _imageBtn.Flyout as Flyout;
+        if (flyout.Content is not ImagePickerFlyout imagePickerFlyout) return;
+
+        imagePickerFlyout.AddImage(image);
+    }
+    
     
     private void SetupImagePicker(DropDownButton btn)
     {

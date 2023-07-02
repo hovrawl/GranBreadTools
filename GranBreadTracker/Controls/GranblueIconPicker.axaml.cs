@@ -7,6 +7,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
@@ -33,16 +34,25 @@ public partial class GranblueIconPicker : UserControl
     private async void Button_OnClick(object? sender, RoutedEventArgs e)
     {
         // select image from file system to upload into app
-        var dlg = new OpenFileDialog();
-        dlg.Filters.Add(new FileDialogFilter() { Name = "Images", Extensions = { "bmp", "png", "jpg", "jpeg", "gif", "ico" } });
-        dlg.AllowMultiple = true;
-
-        var result = await dlg.ShowAsync(new Window());
+        var topLevel = TopLevel.GetTopLevel(this);
+        
+        var extArray = new [] { "*.bmp", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.ico" };
+        var options = new FilePickerOpenOptions
+        {
+            Title = "Select Image",
+            AllowMultiple = true,
+            FileTypeFilter = new FilePickerFileType[]
+            {
+                new("Images") { Patterns = extArray },
+            }
+        };
+        
+        var result = await topLevel.StorageProvider.OpenFilePickerAsync(options);
         if (result != null)
         {
             foreach (var fileName in result)
             {
-                var bitmap = new Bitmap(fileName);
+                var bitmap = new Bitmap(await fileName.OpenReadAsync());
                 var image = new ImageIconSource()
                 {
                     Source = bitmap
@@ -58,10 +68,8 @@ public partial class GranblueIconPicker : UserControl
     
     private void AddImageToPicker(ImageIconSource image)
     {
-        if (_imageBtn == null) return;
-        var flyout = _imageBtn.Flyout as Flyout;
-        if (flyout.Content is not ImagePickerFlyout imagePickerFlyout) return;
+        if (DataContext is not GranblueIconPickerViewModel vm) return;
 
-        imagePickerFlyout.AddImage(image);
+        vm.AddImageToPicker(image);
     }
 }
