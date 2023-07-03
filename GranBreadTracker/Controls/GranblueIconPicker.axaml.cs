@@ -73,7 +73,8 @@ public partial class GranblueIconPicker : UserControl
                     IconSource = image,
                     IconType = IconType.User
                 };
-                    
+                
+                // TODO - Save image to disk to use/load when app re-launches
                 AddImageToPicker(icon);
             }
         }        
