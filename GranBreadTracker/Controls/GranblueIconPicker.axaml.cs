@@ -58,7 +58,7 @@ public partial class GranblueIconPicker : UserControl
             foreach (var fileName in result)
             {
                 var bitmap = new Bitmap(await fileName.OpenReadAsync());
-                var image = new ImageIconSource()
+                var image = new ImageIconSource
                 {
                     Source = bitmap
                 };

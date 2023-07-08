@@ -1,4 +1,5 @@
-﻿using FluentAvalonia.UI.Controls;
+﻿using System.Collections.Generic;
+using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
 
 namespace GranBreadTracker.ViewModels;
@@ -55,7 +56,7 @@ public class SourceDefDialogViewModel: ViewModelBase
             }
         }
     }
-    
+
     private GranBreadIcon _icon;
 
     /// <summary>
@@ -73,6 +74,11 @@ public class SourceDefDialogViewModel: ViewModelBase
         }
     }
     
+    /// <summary>
+    /// Dictionary containing Item ID + how many drops
+    /// </summary>
+    public Dictionary<string, double> Items { get; set; }
+    
     private void HandleNameChange(string newValue)
     {
         // can use this to check if the item name is already taken and prevent user from creating another tracker
@@ -83,6 +89,19 @@ public class SourceDefDialogViewModel: ViewModelBase
         // can use this to check if the item name is already taken and prevent user from creating another tracker
     }
 
+    /// <summary>
+    /// Update count for item
+    /// </summary>
+    /// <param name="itemId">string item id</param>
+    /// <param name="countChange">integer change for item count, positive for increase, negative for decrease</param>
+    public void UpdateItemCount(string itemId, int countChange)
+    {
+        if (!Items.ContainsKey(itemId)) return;
+        var value = Items[itemId];
+        var updatedValue = value + countChange;
+        Items[itemId] = updatedValue;
+    }
+
     public ItemSourceDef ToDef()
     {
         return new ItemSourceDef
@@ -90,7 +109,8 @@ public class SourceDefDialogViewModel: ViewModelBase
             Id = Id,
             Icon = Icon,
             Name = Name,
-            Description = Description
+            Description = Description,
+            Items = Items,
         };
     }
 }

@@ -401,6 +401,20 @@ public partial class MainView : UserControl
                 if (!App.Current.Resources.TryGetResource(tracker.Icon.IconKey, null, out var icon)) continue;
                 if (icon is not ImageIconSource iconSource) continue;
                 tracker.Icon.IconSource = iconSource;
+
+                var outdatedSourceIds = new List<string>();
+                
+                foreach (var sourceId in tracker.SourceIds)
+                {
+                    var foundSource = sources.FirstOrDefault(i => i.Id.Equals(sourceId));
+                    if (foundSource == null)
+                    {
+                        outdatedSourceIds.Add(sourceId);
+                        continue;
+                    }
+                    
+                    tracker.Sources.Add(foundSource);
+                }
             }
             
             App.Current.Resources.Add("Items", items);

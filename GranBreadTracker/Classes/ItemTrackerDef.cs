@@ -28,7 +28,13 @@ public class ItemTrackerDef
     /// GranBreadIcon def that includes ItemKey and ItemType
     /// </summary>
     public GranBreadIcon Icon { get; set; }
+
+    /// <summary>
+    /// List of the Ids of the Sources saved into this tracker
+    /// </summary>
+    public List<string> SourceIds { get; set; } = new ();
     
+    [JsonIgnore]
     public ObservableCollection<ItemSourceDef> Sources { get; set; } = new ();
 
     public List<ItemSourcePageViewModel> GenerateSourceViewModels()

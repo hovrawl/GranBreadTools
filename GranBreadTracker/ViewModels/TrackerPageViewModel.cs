@@ -33,11 +33,12 @@ public class TrackerPageViewModel : MainPageViewModelBase
     private void AddItemDefExecute(object obj)
     {
         // Pop up item tracker creation dialog 
-        CreateNewItemTracker();
+        var existing = obj as ItemTrackerPageViewModel;
+        CreateNewItemTracker(existing);
     }
 
 
-    private async void CreateNewItemTracker()
+    private async void CreateNewItemTracker(ItemTrackerPageViewModel existing)
     {
         var dialog = new ContentDialog
         {
@@ -47,7 +48,17 @@ public class TrackerPageViewModel : MainPageViewModelBase
         };
 
         // Pass the dialog if you need to hide it from the ViewModel.
-        var viewModel = new NewItemTrackerDialogViewModel(dialog);
+        var viewModel = new NewItemTrackerDialogViewModel(dialog)
+        {
+            Id = Guid.NewGuid().ToString()
+        };
+        
+        if (existing != null)
+        {
+            viewModel.Id = existing.ItemTrackerDef.Id;
+            viewModel.Name = existing.ItemTrackerDef.Name;
+            viewModel.Icon = existing.ItemTrackerDef.Icon;
+        }
 
         // In our case the Content is a UserControl, but can be anything.
         dialog.Content = new NewItemTrackerDialog()
@@ -61,29 +72,26 @@ public class TrackerPageViewModel : MainPageViewModelBase
         {
             var newItemDialog = dialog.Content as NewItemTrackerDialog;
             var newItemViewModel = newItemDialog.DataContext as NewItemTrackerDialogViewModel;
-            var itemName = newItemViewModel.ItemName;
+            var itemName = newItemViewModel.Name;
             if (!string.IsNullOrEmpty(itemName))
             {
-                var icon = newItemViewModel.Icon;
-                var returnDef = new ItemTrackerDef
+                var returnDef = newItemViewModel.ToDef();
+                if (existing == null)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = itemName,
-                    Icon = icon,
-                    Description = "New Item Tracker, rename me, give an icon customise Drop Locations.",
-                    Sources = new ObservableCollection<ItemSourceDef>
-                    {
-                        new ItemSourceDef
-                        {
-                            Name = "Source 1",
-                            Description = "The First Source, edit me",
-                            Icon = icon
-                        }
-                    }
-                };
+                    returnDef.Sources = new ObservableCollection<ItemSourceDef>();
+                    Items.Add(returnDef.ToViewModel());
+                }
+                else
+                {
+                    // If we have an existing item tracker def, we will update its values
+                    returnDef = existing.ItemTrackerDef;
+                    returnDef.Icon = newItemViewModel.Icon;
+                    returnDef.Name = newItemViewModel.Name;
+                    returnDef.Description = newItemViewModel.Description;
+                }
                 
-                var newVm = new ItemTrackerPageViewModel(returnDef);
-                Items.Add(newVm);
+                DataManager.ItemTrackerDefs().Upsert(returnDef);
+                DataManager.ItemTrackerDefs().Save();
             }
            
         }

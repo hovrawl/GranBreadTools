@@ -1,0 +1,29 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:classes="using:GranBreadTracker.Classes"
+             xmlns:vm="using:GranBreadTracker.ViewModels"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:conv="clr-namespace:GranBreadTracker.Converters"
+             x:DataType="vm:ImagePickerFlyoutModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GranBreadTracker.Controls.GranblueObjectPickerFlyout">
+    <StackPanel Orientation="Horizontal">
+        <ListBox Name="ObjectPicker" SelectionChanged="ObjectPicker_OnSelectionChanged" Tapped="ObjectPicker_OnTapped">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="classes:GranblueObject" >
+                    <StackPanel Orientation="Vertical">
+                        <ui:IconSourceElement IconSource="{Binding Icon.IconSource}" Width="50" Height="50"/>
+                        <TextBlock Text="{Binding Name}"></TextBlock>                        
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel MaxWidth="300"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+    </StackPanel>
+</UserControl>

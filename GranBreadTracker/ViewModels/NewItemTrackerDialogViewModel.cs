@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
 
@@ -27,27 +28,55 @@ public class NewItemTrackerDialogViewModel : ViewModelBase
         var result = args.Result;
     }
 
-    private string _itemName;
+    private string _id;
 
     /// <summary>
-    /// Gets or sets the Item Name
+    /// Gets or sets the Id
     /// </summary>
-    public string ItemName
+    public string Id
     {
-        get => _itemName;
+        get => _id;
         set
         {
-            if (RaiseAndSetIfChanged(ref _itemName, value))
+            if (RaiseAndSetIfChanged(ref _id, value))
             {
-                HandleUserInput(_itemName);
             }
         }
     }
     
-    private void HandleUserInput(string itemName)
+    private string _name;
+
+    /// <summary>
+    /// Gets or sets the Item Name
+    /// </summary>
+    public string Name
     {
-        // can use this to check if the item name is already taken and prevent user from creating another tracker
+        get => _name;
+        set
+        {
+            if (RaiseAndSetIfChanged(ref _name, value))
+            {
+            }
+        }
     }
+    
+    private string _description;
+
+    /// <summary>
+    /// Gets or sets the Description
+    /// </summary>
+    public string Description
+    {
+        get => _description;
+        set
+        {
+            if (RaiseAndSetIfChanged(ref _description, value))
+            {
+                
+            }
+        }
+    }
+
 
     private GranBreadIcon _icon;
 
@@ -64,5 +93,16 @@ public class NewItemTrackerDialogViewModel : ViewModelBase
                 
             }
         }
+    }
+
+    public ItemTrackerDef ToDef()
+    {
+        return new ItemTrackerDef
+        {
+            Id = Id,
+            Name = Name,
+            Description = Description,
+            Icon = Icon,
+        };
     }
 }

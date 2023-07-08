@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.ViewModels;
 
@@ -25,6 +26,11 @@ public class ItemSourceDef
     /// GranBreadIcon def that includes ItemKey and ItemType
     /// </summary>
     public GranBreadIcon Icon { get; set; }
+
+    /// <summary>
+    /// Dictionary containing Item ID + how many drops
+    /// </summary>
+    public Dictionary<string, double> Items { get; set; }
 
     /// <summary>
     /// Get this item as a view model

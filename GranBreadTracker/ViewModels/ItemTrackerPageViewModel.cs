@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
+using GranBreadTracker.Classes.Data;
+using GranBreadTracker.Controls;
 using GranBreadTracker.Pages;
 
 namespace GranBreadTracker.ViewModels;
@@ -17,7 +19,7 @@ public class ItemTrackerPageViewModel : ViewModelBase
 
     public ItemTrackerPageViewModel(ItemTrackerDef trackerDef)
     {
-        AddItemSourceCommand = new GeneralCommand(AddItemSoureExecute);
+        AddItemSourceCommand = new GeneralCommand(AddItemSourceExecute);
 
         Sources = new ObservableCollection<ItemSourcePageViewModel>();
         
@@ -27,7 +29,7 @@ public class ItemTrackerPageViewModel : ViewModelBase
         Sources.AddRange(sourceVms);
     }
     
-    private void AddItemSoureExecute(object obj)
+    private void AddItemSourceExecute(object obj)
     {
         // Pop up item tracker creation dialog 
         CreateNewItemSource();
@@ -37,39 +39,41 @@ public class ItemTrackerPageViewModel : ViewModelBase
     {
         var dialog = new ContentDialog
         {
-            Title = "New Item Source",
-            PrimaryButtonText = "Create",
+            Title = "Add Item Source",
+            PrimaryButtonText = "Add",
             CloseButtonText = "Cancel"
         };
 
         // Pass the dialog if you need to hide it from the ViewModel.
-        var viewModel = new NewItemTrackerDialogViewModel(dialog);
+        var viewModel = new GranblueObjectPickerViewModel(GranblueObjectType.Source);
 
-        // In our case the Content is a UserControl, but can be anything.
-        dialog.Content = new NewItemTrackerDialog()
+        var objectPicker = new GranblueObjectPickerPage
         {
             DataContext = viewModel
         };
-
+        objectPicker.InitializeObjects();
+        
+        // In our case the Content is a UserControl, but can be anything.
+        dialog.Content = objectPicker;
+        
         var dialogResult = await dialog.ShowAsync();
         
         if (dialogResult == ContentDialogResult.Primary)
         {
-            var newItemDialog = dialog.Content as NewItemTrackerDialog;
-            var newItemViewModel = newItemDialog.DataContext as NewItemTrackerDialogViewModel;
-            var itemName = newItemViewModel.ItemName;
-            if (!string.IsNullOrEmpty(itemName))
+            var newItemDialog = dialog.Content as GranblueObjectPickerPage;
+            var newItemViewModel = newItemDialog.DataContext as GranblueObjectPickerViewModel;
+            var selectedObject = newItemViewModel.GranblueObject;
+            if (!string.IsNullOrEmpty(selectedObject?.Id))
             {
-                var iconSource = newItemViewModel.Icon;
-                var returnDef = new ItemSourceDef
-                {
-                    Name = itemName,
-                    Icon = iconSource,
-                    Description = "New Item Source, rename me, give an icon customise Drop Locations.",
-                };
+                var existingSource = DataManager.ItemSources().FindById(selectedObject.Id);
                 
-                var newVm = new ItemSourcePageViewModel(returnDef);
+                var newVm = new ItemSourcePageViewModel(existingSource);
+                ItemTrackerDef.SourceIds.Add(existingSource.Id);
+                ItemTrackerDef.Sources.Add(existingSource);
                 Sources.Add(newVm);
+                
+                DataManager.ItemTrackerDefs().Upsert(ItemTrackerDef);
+                DataManager.ItemTrackerDefs().Save();
             }
            
         }
