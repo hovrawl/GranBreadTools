@@ -40,6 +40,22 @@ public class GranblueObjectPickerViewModel : ViewModelBase
     public void Initialize(GranblueObjectPickerPage picker)
     {
         _picker = picker;
+
+        // Init Data
+        InitializeData();
+        
+        
+        // Setup flyout
+        var pickerFlyout = SetupPickerFlyout();
+
+        _btn = _picker.FindControl<DropDownButton>("ObjectPicker");
+
+        _btn.Flyout = pickerFlyout;
+        _btn.DataContext = GranblueObject;
+    }
+
+    public void InitializeData()
+    {
         GranblueObjects = new ObservableCollection<GranblueObject>();
         // Iterate over specified types and get GranblueObjects
         foreach (var type in Types)
@@ -66,23 +82,16 @@ public class GranblueObjectPickerViewModel : ViewModelBase
                 }
             }
         }
-
+        
+        
         // Setup initial GranblueObject
         GranblueObject = GranblueObjects.FirstOrDefault();
-        
-        // Setup flyout
-        var pickerFlyout = SetupPickerFlyout();
-
-        _btn = _picker.FindControl<DropDownButton>("ObjectPicker");
-
-        _btn.Flyout = pickerFlyout;
-        _btn.DataContext = GranblueObject;
     }
     
     
     private Flyout SetupPickerFlyout()
     {
-        var flyout = new GranblueObjectPickerFlyout(GranblueObjects);
+        var flyout = new GranblueObjectPickerList(GranblueObjects, false);
         var returnFlyout = new Flyout
         {
             Content = flyout
@@ -92,7 +101,7 @@ public class GranblueObjectPickerViewModel : ViewModelBase
         flyout.ObjectPickerSelectEventHandler += (sender, args) =>
         {
             returnFlyout.Hide();
-            var selectedImage = flyout.GetSelectedImage();
+            var selectedImage = flyout.GetSelectedObject();
             GranblueObject = selectedImage;
             _btn.DataContext = GranblueObject;
         };

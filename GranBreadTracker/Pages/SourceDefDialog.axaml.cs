@@ -1,9 +1,11 @@
-﻿using Avalonia;
+﻿using System.Collections.Generic;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using FluentAvalonia.UI.Controls;
+using GranBreadTracker.Classes;
 using GranBreadTracker.Controls;
 using GranBreadTracker.ViewModels;
 
@@ -57,4 +59,26 @@ public partial class SourceDefDialog : UserControl
             dialogContext.Icon = vm.Icon;
         }
     }
+
+    private void ItemListPanel_OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
+    {
+        if (sender is not StackPanel panel) return;
+        
+        var viewModel = new GranblueObjectPickerViewModel(GranblueObjectType.Item);
+        viewModel.InitializeData();
+        
+        var pickerList = new GranblueObjectPickerList(viewModel.GranblueObjects, true);
+        panel.Children.Add(pickerList);
+
+
+        
+        pickerList.ObjectPickerSelectEventHandler += (sender, args) =>
+        {
+            var selectedObjects = pickerList.GetSelectedObjects();
+
+            SelectedItems = selectedObjects;
+        };
+    }
+
+    public ICollection<GranblueObject> SelectedItems { get; set; } = new List<GranblueObject>();
 }

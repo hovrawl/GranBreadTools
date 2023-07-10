@@ -5,7 +5,7 @@
              xmlns:ui="using:FluentAvalonia.UI.Controls"             
              xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
              xmlns:vm="using:GranBreadTracker.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
              x:Class="GranBreadTracker.Views.MainView"
              x:DataType="vm:MainViewViewModel"
              x:CompileBindings="True">
@@ -47,6 +47,7 @@
                            Grid.RowSpan="2"
                            Name="NavView"
                            IsSettingsVisible="False"
+                           OpenPaneLength="180"
                            IsBackEnabled="{Binding #FrameView.CanGoBack}">
             <ui:Frame Name="FrameView" />
         </ui:NavigationView>

@@ -18,5 +18,10 @@
         
         <controls:GranblueIconPicker AttachedToVisualTree="IconPicker_OnAttachedToVisualTree" />
         
+        
+        <StackPanel Name="ItemListPanel" AttachedToVisualTree="ItemListPanel_OnAttachedToVisualTree">
+            
+        </StackPanel>
+        
     </StackPanel>
 </UserControl>

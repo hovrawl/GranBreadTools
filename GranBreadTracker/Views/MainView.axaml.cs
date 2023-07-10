@@ -67,7 +67,7 @@ public partial class MainView : UserControl
         NavView.BackRequested += OnNavigationViewBackRequested;      
         
         // Load Items
-        LoadData();
+        DataManager.Initialise();
     }
 
     protected override void OnLoaded()
@@ -366,64 +366,5 @@ public partial class MainView : UserControl
     }
 
     private bool _isDesktop;
-
-    private void LoadData()
-    {
-        try
-        {
-            DataManager.Initialise();
-            var items = DataManager.Items().All();
-            var sources = DataManager.ItemSources().All();
-            var trackers = DataManager.ItemTrackerDefs().All();
-            
-            foreach (var item in items)
-            {
-                // Populate the iconSource for each item
-                if(item.Icon == null || string.IsNullOrEmpty(item.Icon.IconKey)) continue;
-                if (!App.Current.Resources.TryGetResource(item.Icon.IconKey, null, out var icon)) continue;
-                if (icon is not ImageIconSource iconSource) continue;
-                item.Icon.IconSource = iconSource;
-            }
-
-            foreach (var source in sources)
-            {
-                // Populate the iconSource for each source
-                if(source.Icon == null || string.IsNullOrEmpty(source.Icon.IconKey)) continue;
-                if (!App.Current.Resources.TryGetResource(source.Icon.IconKey, null, out var icon)) continue;
-                if (icon is not ImageIconSource iconSource) continue;
-                source.Icon.IconSource = iconSource;
-            }
-            
-            foreach (var tracker in trackers)
-            {
-                // Populate the iconSource for each source
-                if(tracker.Icon == null || string.IsNullOrEmpty(tracker.Icon.IconKey)) continue;
-                if (!App.Current.Resources.TryGetResource(tracker.Icon.IconKey, null, out var icon)) continue;
-                if (icon is not ImageIconSource iconSource) continue;
-                tracker.Icon.IconSource = iconSource;
-
-                var outdatedSourceIds = new List<string>();
-                
-                foreach (var sourceId in tracker.SourceIds)
-                {
-                    var foundSource = sources.FirstOrDefault(i => i.Id.Equals(sourceId));
-                    if (foundSource == null)
-                    {
-                        outdatedSourceIds.Add(sourceId);
-                        continue;
-                    }
-                    
-                    tracker.Sources.Add(foundSource);
-                }
-            }
-            
-            App.Current.Resources.Add("Items", items);
-            App.Current.Resources.Add("Sources", sources);
-            App.Current.Resources.Add("Trackers", trackers);
-        }
-        catch
-        {
-
-        }
-    }
+    
 }
