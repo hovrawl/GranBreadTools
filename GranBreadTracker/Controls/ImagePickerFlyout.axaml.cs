@@ -9,6 +9,7 @@ using Avalonia.Markup.Xaml;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
+using GranBreadTracker.Styling;
 
 namespace GranBreadTracker.Controls;
 
@@ -63,7 +64,7 @@ public partial class ImagePickerFlyout : UserControl
 
     }
 
-    public void SetSelectedImage(ImageIconSource icon)
+    public void SetSelectedImage(GranBreadIconSource icon)
     {
         _imageList.SelectedValue = icon;
     }

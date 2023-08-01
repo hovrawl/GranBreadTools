@@ -8,20 +8,29 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GranBreadTracker.Pages.SourceDefDialog">
     <StackPanel Spacing="10" MinWidth="400" Orientation="Vertical">
-        <Label>
-            Source Name
-        </Label>
-        <TextBox 
-            Watermark="Source Name"
-            Text="{CompiledBinding Name}"
-            AttachedToVisualTree="InputField_OnAttachedToVisualTree" />
-        
-        <controls:GranblueIconPicker AttachedToVisualTree="IconPicker_OnAttachedToVisualTree" />
-        
-        
-        <StackPanel Name="ItemListPanel" AttachedToVisualTree="ItemListPanel_OnAttachedToVisualTree">
-            
+        <StackPanel Spacing="10" Orientation="Vertical"> 
+            <Label>
+                Name
+            </Label>
+            <TextBox 
+                Watermark="Source Name"
+                Text="{CompiledBinding Name}"
+                AttachedToVisualTree="InputField_OnAttachedToVisualTree" />
         </StackPanel>
-        
+        <StackPanel Spacing="10" Orientation="Horizontal">
+            <StackPanel Spacing="10" Orientation="Vertical"> 
+                <Label>
+                    Icon
+                </Label>
+                <controls:GranblueIconPicker AttachedToVisualTree="IconPicker_OnAttachedToVisualTree" />
+            </StackPanel>
+            <StackPanel Spacing="10" Orientation="Vertical"> 
+                <StackPanel Name="ItemListPanel" AttachedToVisualTree="ItemListPanel_OnAttachedToVisualTree">
+                    <Label>
+                        Items
+                    </Label>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
     </StackPanel>
 </UserControl>

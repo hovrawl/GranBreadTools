@@ -18,8 +18,10 @@ public partial class MainWindow : AppWindow
         InitializeComponent();
         
         // Set initial size
+        MinWidth = 600;
+        MinHeight = 300;
         Width = 800;
-        Height = 400;
+        Height = 440;
         
         SplashScreen = new MainAppSplashScreen(this);
         TitleBar.ExtendsContentIntoTitleBar = true;

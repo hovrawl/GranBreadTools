@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAvalonia.UI.Controls;
+using GranBreadTracker.Styling;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace GranBreadTracker.Classes.Data;
@@ -33,7 +34,7 @@ public sealed class DataManager
             // Populate the iconSource for each item
             if(item.Icon == null || string.IsNullOrEmpty(item.Icon.IconKey)) continue;
             if (!App.Current.Resources.TryGetResource(item.Icon.IconKey, null, out var icon)) continue;
-            if (icon is not ImageIconSource iconSource) continue;
+            if (icon is not GranBreadIconSource iconSource) continue;
             item.Icon.IconSource = iconSource;
         }
 
@@ -42,7 +43,7 @@ public sealed class DataManager
             // Populate the iconSource for each source
             if(source.Icon == null || string.IsNullOrEmpty(source.Icon.IconKey)) continue;
             if (!App.Current.Resources.TryGetResource(source.Icon.IconKey, null, out var icon)) continue;
-            if (icon is not ImageIconSource iconSource) continue;
+            if (icon is not GranBreadIconSource iconSource) continue;
             source.Icon.IconSource = iconSource;
         }
             
@@ -51,7 +52,7 @@ public sealed class DataManager
             // Populate the iconSource for each source
             if(tracker.Icon == null || string.IsNullOrEmpty(tracker.Icon.IconKey)) continue;
             if (!App.Current.Resources.TryGetResource(tracker.Icon.IconKey, null, out var icon)) continue;
-            if (icon is not ImageIconSource iconSource) continue;
+            if (icon is not GranBreadIconSource iconSource) continue;
             tracker.Icon.IconSource = iconSource;
 
             var outdatedSourceIds = new List<string>();

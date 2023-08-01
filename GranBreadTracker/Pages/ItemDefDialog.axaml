@@ -8,16 +8,22 @@
              x:DataType="vm:ItemDefDialogViewModel"
              x:Class="GranBreadTracker.Pages.ItemDefDialog">
     <StackPanel Spacing="10" MinWidth="400" Orientation="Vertical">
-        <Label>
-            Item Name
-        </Label>
-        <TextBox 
-            Watermark="Item Name"
-            Text="{CompiledBinding Name}"
-            AttachedToVisualTree="InputField_OnAttachedToVisualTree" />
-        
-        <controls:GranblueIconPicker AttachedToVisualTree="IconPicker_OnAttachedToVisualTree" />
-        <!-- <controls:GranblueIconPicker AttachedToVisualTree="IconPicker_OnAttachedToVisualTree"  /> -->
-        
+        <StackPanel Spacing="10" Orientation="Vertical"> 
+            <Label>
+                Name
+            </Label>
+            <TextBox 
+                Watermark="Item Name"
+                Text="{CompiledBinding Name}"
+                AttachedToVisualTree="InputField_OnAttachedToVisualTree" />
+        </StackPanel>
+        <StackPanel Spacing="10" Orientation="Horizontal">
+            <StackPanel Spacing="10" Orientation="Vertical"> 
+                <Label>
+                    Icon
+                </Label>
+                <controls:GranblueIconPicker AttachedToVisualTree="IconPicker_OnAttachedToVisualTree" />
+            </StackPanel>
+        </StackPanel>        
     </StackPanel>
 </UserControl>

@@ -8,6 +8,7 @@ using Avalonia.Media.Imaging;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
 using GranBreadTracker.Controls;
+using GranBreadTracker.Styling;
 
 namespace GranBreadTracker.ViewModels;
 
@@ -52,21 +53,31 @@ public class GranblueIconPickerViewModel : ViewModelBase
     private void SetupImagePicker(DropDownButton btn)
     {
         if(btn == null) return;
+
+        var allIcons = GetAllIcons();
+        
+        var granBreadIcons = 
+            allIcons.Where(i => i.Value is GranBreadIconSource icon && icon.IconType != IconType.User);
         
         // Setup image list
-        foreach (var iconName in IconNameList)
+        foreach (var iconKeyPair in granBreadIcons)
         {
-            if(!App.Current.Resources.TryGetResource(iconName, null, out var icon)) continue;
-            if(icon is not ImageIconSource iconSource) continue;
-            Icons.Add(new GranBreadIcon(iconSource, iconName as string, IconType.Item));
+            if(iconKeyPair.Value is not GranBreadIconSource iconSource) continue;
+            Icons.Add(new GranBreadIcon(iconSource, iconKeyPair.Key as string, IconType.Item));
         }
 
-        var userIcons = App.Current.Resources.Keys.Where(i => i.ToString().StartsWith("user-icon"));
-        foreach (var iconName in userIcons)
+        var userIcons = 
+            allIcons.Where(i => i.Value is GranBreadIconSource icon && icon.IconType == IconType.User);
+        if (!userIcons.Any())
         {
-            if(!App.Current.Resources.TryGetResource(iconName, null, out var icon)) continue;
-            if(icon is not ImageIconSource iconSource) continue;
-            Icons.Add(new GranBreadIcon(iconSource, iconName as string, IconType.User));
+            // load user icons from disk if none exist in resource dictionary
+
+        }
+        
+        foreach (var iconKeyPair in userIcons)
+        {
+            if(iconKeyPair.Value is not GranBreadIconSource iconSource) continue;
+            Icons.Add(new GranBreadIcon(iconSource, iconKeyPair.Key as string, IconType.User));
         }
 
         var firstIcon = Icons.FirstOrDefault();
@@ -133,6 +144,20 @@ public class GranblueIconPickerViewModel : ViewModelBase
     {
         if (_imageBtn == null) return;
         _imageBtn.DataContext = iconSource;
+    }
+
+    private IEnumerable<KeyValuePair<object, object>> GetAllIcons()
+    {
+        var returnIcons = new List<KeyValuePair<object, object>>();
+
+        foreach (var resourceDict in App.Current.Resources.MergedDictionaries.OfType<ResourceDictionary>())
+        {
+            var found = resourceDict.Where(i => i.Value is GranBreadIconSource);
+            returnIcons.AddRange(found);
+            
+            // Maybe need recursive check in different setup
+        }
+        return returnIcons;
     }
 }
 

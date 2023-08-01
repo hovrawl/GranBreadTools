@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ui="using:FluentAvalonia.UI.Controls" >
+                    xmlns:ui="using:FluentAvalonia.UI.Controls"
+                    xmlns:styling="clr-namespace:GranBreadTracker.Styling">
 
     <ui:SymbolIconSource x:Key="SaveIcon" Symbol="Save" />
     <ui:FontIconSource x:Key="FontIcon" Glyph="F" />
@@ -78,13 +79,22 @@
     
 
     <!-- ItemIcons -->
-    <ui:ImageIconSource x:Key="BlueChestIcon" Source="avares://GranBreadTracker/Assets/Images/General/bluechest.png" />
-    <ui:ImageIconSource x:Key="GoldBarIcon" Source="avares://GranBreadTracker/Assets/Images/General/goldbar.png" />
-    <ui:ImageIconSource x:Key="GoldBarYoinkIcon" Source="avares://GranBreadTracker/Assets/Images/General/goldbarYoink.png" />
-    <ui:ImageIconSource x:Key="EternitySandIcon" Source="avares://GranBreadTracker/Assets/Images/General/eternitysand.png" />
+    <styling:GranBreadIconSource x:Key="BlueChestIcon" IconType="Item" Source="avares://GranBreadTracker/Assets/Images/General/bluechest.png" />
+    <styling:GranBreadIconSource x:Key="NoBlueChestIcon" IconType="Item" Source="avares://GranBreadTracker/Assets/Images/General/noBlueChest.png" />
+    <styling:GranBreadIconSource x:Key="GoldBarIcon" IconType="Item" Source="avares://GranBreadTracker/Assets/Images/General/goldbar.png" />
+    <styling:GranBreadIconSource x:Key="GoldBarYoinkIcon" IconType="Item" Source="avares://GranBreadTracker/Assets/Images/General/goldbarYoink.png" />
+    <styling:GranBreadIconSource x:Key="EternitySandIcon" IconType="Item" Source="avares://GranBreadTracker/Assets/Images/General/eternitysand.png" />
+    <styling:GranBreadIconSource x:Key="CoronationRingIcon" IconType="Item" Source="avares://GranBreadTracker/Assets/Images/General/coronationRing.png" />
+    <styling:GranBreadIconSource x:Key="IntricacyRingIcon" IconType="Item" Source="avares://GranBreadTracker/Assets/Images/General/intricacyRing.png" />
+    <styling:GranBreadIconSource x:Key="LineageRingIcon" IconType="Item" Source="avares://GranBreadTracker/Assets/Images/General/lineageRing.png" />
+    <styling:GranBreadIconSource x:Key="EarringIcon" IconType="Item" Source="avares://GranBreadTracker/Assets/Images/General/earring.png" />
+    <styling:GranBreadIconSource x:Key="TrashIcon" IconType="Item" Source="avares://GranBreadTracker/Assets/Images/General/trash.png" />
 
     <!-- DropLocationSource -->
-    <ui:ImageIconSource x:Key="PBHLIcon" Source="avares://GranBreadTracker/Assets/Images/PBHL/pbhl.png" />
+    <styling:GranBreadIconSource x:Key="PBHLIcon" IconType="Raid" Source="avares://GranBreadTracker/Assets/Images/PBHL/pbhl.png" />
+    <styling:GranBreadIconSource x:Key="DragonIcon" IconType="Raid" Source="avares://GranBreadTracker/Assets/Images/Dragon/dragon.png" />
+    <styling:GranBreadIconSource x:Key="RevansIcon" IconType="Raid" Source="avares://GranBreadTracker/Assets/Images/Revans/revansCount.png" />
+    <styling:GranBreadIconSource x:Key="SUBHLIcon" IconType="Raid" Source="avares://GranBreadTracker/Assets/Images/SUBHL/subhl.png" />
     
     <ui:ImageIconSource x:Key="SourceCodeIcon">
         <ui:ImageIconSource.Source>

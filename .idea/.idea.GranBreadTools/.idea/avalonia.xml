@@ -7,6 +7,7 @@
         <entry key="GranBreadTracker/Classes/GranblueObjectPickerPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Controls/GranblueIconPicker.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Controls/GranblueObjectPickerFlyout.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
+        <entry key="GranBreadTracker/Controls/GranblueObjectPickerList.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Controls/GranblueObjectPickerPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Controls/ImageListItemTemplate.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Controls/ImagePickerFlyout.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
@@ -26,6 +27,7 @@
         <entry key="GranBreadTracker/Pages/SourcesPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/TrackerPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Styling/GranBreadTrackerStyles.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
+        <entry key="GranBreadTracker/Styling/GranblueIconSource.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Styling/Resources.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Views/MainAppSplashContent.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Views/MainView.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />

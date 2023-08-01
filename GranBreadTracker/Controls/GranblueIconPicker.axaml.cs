@@ -13,6 +13,7 @@ using Avalonia.VisualTree;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
+using GranBreadTracker.Styling;
 using GranBreadTracker.ViewModels;
 
 namespace GranBreadTracker.Controls;
@@ -58,9 +59,10 @@ public partial class GranblueIconPicker : UserControl
             foreach (var fileName in result)
             {
                 var bitmap = new Bitmap(await fileName.OpenReadAsync());
-                var image = new ImageIconSource
+                var image = new GranBreadIconSource
                 {
-                    Source = bitmap
+                    Source = bitmap,
+                    IconType = IconType.User
                 };
                 
 

@@ -9,7 +9,7 @@
              x:DataType="vm:GranblueIconPickerViewModel"
              x:Class="GranBreadTracker.Controls.GranblueIconPicker">
     <StackPanel Orientation="Horizontal">
-        <DropDownButton Name="ImageSelector" Width="50" Height="50" Padding="2">
+        <DropDownButton Name="ImageSelector" Width="50" Height="50" Padding="4" Margin="0 0 4 0">
             <DropDownButton.Template>
                 <ControlTemplate x:DataType="classes:GranBreadIcon" >
                     <Border Background="Transparent" CornerRadius="4" Padding="4">

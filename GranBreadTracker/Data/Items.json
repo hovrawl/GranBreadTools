@@ -7,5 +7,14 @@
       "IconKey": "GoldBarIcon",
       "IconType": 1
     }
+  },
+  {
+    "Id": "98f40bd2-29eb-4919-991c-643ee090a581",
+    "Name": "Sands",
+    "Description": "Sands",
+    "Icon" : {
+      "IconKey": "EternitySandIcon",
+      "IconType": 1
+    }
   }
 ]

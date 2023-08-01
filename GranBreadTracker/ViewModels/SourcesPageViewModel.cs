@@ -39,7 +39,7 @@ public class SourcesPageViewModel : MainPageViewModelBase
     {
         var dialog = new ContentDialog
         {
-            Title = "New Item",
+            Title = "New Raid",
             PrimaryButtonText = "Create",
             CloseButtonText = "Cancel"
         };
@@ -51,6 +51,9 @@ public class SourcesPageViewModel : MainPageViewModelBase
         };
         if (existing != null)
         {
+            dialog.Title = "Configure Raid";
+            dialog.PrimaryButtonText = "Save";
+            
             // If editing an existing item, pre-fill details
             viewModel.Id = existing.Id;
             viewModel.Name = existing.Name;

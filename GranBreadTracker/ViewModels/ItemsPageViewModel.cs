@@ -59,6 +59,9 @@ public class ItemsPageViewModel : MainPageViewModelBase
         
         if (existing != null)
         {
+            dialog.Title = "Configure Item";
+            dialog.PrimaryButtonText = "Save";
+            
             // If editing an existing item, pre-fill details
             viewModel.Id = existing.Id;
             viewModel.Name = existing.Name;
