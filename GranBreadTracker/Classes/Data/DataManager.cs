@@ -8,6 +8,7 @@ namespace GranBreadTracker.Classes.Data;
 
 public sealed class DataManager
 {
+    private static readonly GranBreadGoals _goals = new();
     private static readonly GranBreadItems _items = new();
     private static readonly GranBreadItemSources _itemSources = new();
     private static readonly GranBreadTrackers _itemTrackerDefs = new();
@@ -15,6 +16,7 @@ public sealed class DataManager
     private const string ItemsPath = "Data/Items.json";
     private const string ItemSourcesPath = "Data/Sources.json";
     private const string TrackerPath = "Data/Tracker.json";
+    private const string GoalsPath = "Data/Goals.json";
     
     private static readonly DataManager Instance = new();
 
@@ -23,6 +25,7 @@ public sealed class DataManager
         _items.Initialise(ItemsPath);
         _itemSources.Initialise(ItemSourcesPath);
         _itemTrackerDefs.Initialise(TrackerPath);
+        _goals.Initialise(GoalsPath);
         
         // Ensure each item is loaded initialised
         var items = _items.All();
@@ -84,5 +87,10 @@ public sealed class DataManager
     public static GranBreadTrackers ItemTrackerDefs()
     {
         return _itemTrackerDefs;
+    } 
+    
+    public static GranBreadGoals Goals()
+    {
+        return _goals;
     }
 }

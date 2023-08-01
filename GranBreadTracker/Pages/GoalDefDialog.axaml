@@ -1,0 +1,36 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:GranBreadTracker.ViewModels"
+             xmlns:controls="using:GranBreadTracker.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:GoalDefDialogViewModel"
+             x:Class="GranBreadTracker.Pages.GoalDefDialog">
+    <StackPanel Spacing="10" MinWidth="400" Orientation="Vertical">
+        <StackPanel Spacing="10" Orientation="Vertical"> 
+            <Label>
+                Name
+            </Label>
+            <TextBox 
+                Watermark="Goal Name"
+                Text="{CompiledBinding Name}"
+                AttachedToVisualTree="InputField_OnAttachedToVisualTree" />
+        </StackPanel>
+        <StackPanel Spacing="10" Orientation="Horizontal">
+            <StackPanel Spacing="10" Orientation="Vertical"> 
+                <Label>
+                    Icon
+                </Label>
+                <controls:GranblueIconPicker AttachedToVisualTree="IconPicker_OnAttachedToVisualTree" />
+            </StackPanel>
+        </StackPanel>      
+        <StackPanel Spacing="10" Orientation="Vertical"> 
+            <StackPanel Name="ItemListPanel" AttachedToVisualTree="ItemListPanel_OnAttachedToVisualTree">
+                <Label>
+                    Items
+                </Label>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

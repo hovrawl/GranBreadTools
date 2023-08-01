@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
 using GranBreadTracker.Classes.Data;
+using GranBreadTracker.Classes.Extensions;
 using GranBreadTracker.Pages;
 
 namespace GranBreadTracker.ViewModels;

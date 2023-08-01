@@ -25,19 +25,4 @@ public class ItemDef
     /// GranBreadIcon def that includes ItemKey and ItemType
     /// </summary>
     public GranBreadIcon Icon { get; set; }
-
-    /// <summary>
-    /// Get this item as a view model
-    /// </summary>
-    /// <returns></returns>
-    public ItemDefDialogViewModel ToViewModel()
-    {
-        return new ItemDefDialogViewModel
-        {
-            Id = Id,
-            Icon = Icon,
-            Name = Name,
-            Description = Description
-        };
-    }
 }

@@ -106,7 +106,7 @@ public partial class MainView : UserControl
                 NavHeader = "Tracker",
                 IconKey = "CoreControlsIcon"
             },
-            new TrackerPageViewModel
+            new GoalPageViewModel
             {
                 NavHeader = "Goals",
                 IconKey = "CoreControlsIcon"

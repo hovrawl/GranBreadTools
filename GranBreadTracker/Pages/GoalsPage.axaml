@@ -1,0 +1,28 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:GranBreadTracker.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:GoalPageViewModel"
+             x:Class="GranBreadTracker.Pages.GoalsPage">
+    <StackPanel Orientation="Horizontal">
+        <ListBox Name="ItemList" ItemsSource="{Binding Goals}" SelectionChanged="ItemList_OnSelectionChanged">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="vm:GoalDefDialogViewModel" >
+                    <StackPanel Orientation="Vertical" Tapped="Item_OnTapped">
+                        <ui:IconSourceElement IconSource="{CompiledBinding   Icon.IconSource}" Width="50" Height="50"/>
+                        <TextBlock Text="{CompiledBinding Name}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Click="AddItem_OnClick">Add Item</Button>
+    </StackPanel>
+</UserControl>

@@ -31,19 +31,4 @@ public class ItemSourceDef
     /// Dictionary containing Item ID + how many drops
     /// </summary>
     public Dictionary<string, double> Items { get; set; }
-
-    /// <summary>
-    /// Get this item as a view model
-    /// </summary>
-    /// <returns></returns>
-    public SourceDefDialogViewModel ToViewModel()
-    {
-        return new SourceDefDialogViewModel()
-        {
-            Id = Id,
-            Icon = Icon,
-            Name = Name,
-            Description = Description
-        };
-    }
 }

@@ -11,6 +11,7 @@ using Avalonia.Platform;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
 using GranBreadTracker.Classes.Data;
+using GranBreadTracker.Classes.Extensions;
 using GranBreadTracker.Pages;
 using Microsoft.Extensions.Configuration;
 
@@ -18,6 +19,10 @@ namespace GranBreadTracker.ViewModels;
 
 public class ItemsPageViewModel : MainPageViewModelBase
 {
+    public ObservableCollection<ItemDefDialogViewModel> Items { get; }
+
+    public GeneralCommand AddItemCommand { get; }
+    
     public ItemsPageViewModel()
     {
         // Load items from storage/settings
@@ -31,9 +36,7 @@ public class ItemsPageViewModel : MainPageViewModelBase
 
     }
     
-    public ObservableCollection<ItemDefDialogViewModel> Items { get; }
-
-    public GeneralCommand AddItemCommand { get; }
+   
     
     private void ItemDefDialogExecute(object obj)
     {

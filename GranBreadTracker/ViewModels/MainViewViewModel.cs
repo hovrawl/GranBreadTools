@@ -47,6 +47,13 @@ public class NavigationFactory : INavigationPageFactory
                 DataContext = target
             };
         }
+        else if (target is GoalPageViewModel)
+        {
+            return new GoalsPage()
+            {
+                DataContext = target
+            };
+        }
         else if (target is ItemTrackerPageViewModel)
         {
             return new ItemTrackerPage()

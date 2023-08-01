@@ -1,9 +1,9 @@
-﻿using FluentAvalonia.UI.Controls;
+﻿using System.Collections.Generic;
 using GranBreadTracker.Classes;
 
 namespace GranBreadTracker.ViewModels;
 
-public class ItemDefDialogViewModel : ViewModelBase
+public class GoalDefDialogViewModel: ViewModelBase
 {
     private string _id;
 
@@ -55,11 +55,11 @@ public class ItemDefDialogViewModel : ViewModelBase
             }
         }
     }
-    
+
     private GranBreadIcon _icon;
 
     /// <summary>
-    /// Gets or sets the Icon
+    /// Gets or sets the GranBreadIcon
     /// </summary>
     public GranBreadIcon Icon
     {
@@ -73,6 +73,11 @@ public class ItemDefDialogViewModel : ViewModelBase
         }
     }
     
+    /// <summary>
+    /// Dictionary containing Item ID + how many drops
+    /// </summary>
+    public Dictionary<string, double> Items { get; set; }
+    
     private void HandleNameChange(string newValue)
     {
         // can use this to check if the item name is already taken and prevent user from creating another tracker
@@ -81,5 +86,18 @@ public class ItemDefDialogViewModel : ViewModelBase
     private void HandleDescriptionChange(string newValue)
     {
         // can use this to check if the item name is already taken and prevent user from creating another tracker
+    }
+
+    /// <summary>
+    /// Update count for item
+    /// </summary>
+    /// <param name="itemId">string item id</param>
+    /// <param name="countChange">integer change for item count, positive for increase, negative for decrease</param>
+    public void UpdateItemCount(string itemId, int countChange)
+    {
+        if (!Items.ContainsKey(itemId)) return;
+        var value = Items[itemId];
+        var updatedValue = value + countChange;
+        Items[itemId] = updatedValue;
     }
 }

@@ -101,16 +101,4 @@ public class SourceDefDialogViewModel: ViewModelBase
         var updatedValue = value + countChange;
         Items[itemId] = updatedValue;
     }
-
-    public ItemSourceDef ToDef()
-    {
-        return new ItemSourceDef
-        {
-            Id = Id,
-            Icon = Icon,
-            Name = Name,
-            Description = Description,
-            Items = Items,
-        };
-    }
 }
