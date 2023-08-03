@@ -31,6 +31,7 @@ public sealed class DataManager
         var items = _items.All();
         var sources = _itemSources.All();
         var trackers = _itemTrackerDefs.All();
+        var goals = _goals.All();
 
         foreach (var item in items)
         {
@@ -70,6 +71,37 @@ public sealed class DataManager
                 }
                     
                 tracker.Sources.Add(foundSource);
+            }
+            
+        }
+        
+        foreach (var goal in goals)
+        {
+            // Populate the iconSource for each source
+            if(goal.Icon == null || string.IsNullOrEmpty(goal.Icon.IconKey)) continue;
+            if (!App.Current.Resources.TryGetResource(goal.Icon.IconKey, null, out var icon)) continue;
+            if (icon is not GranBreadIconSource iconSource) continue;
+            goal.Icon.IconSource = iconSource;
+
+            var outdatedItemCounts = new List<string>();
+                
+            foreach (var itemPair in goal.Items)
+            {
+                var foundItem = items.FirstOrDefault(i => i.Id.Equals(itemPair.Key));
+                if (foundItem == null)
+                {
+                    outdatedItemCounts.Add(itemPair.Key);
+                    continue;
+                }
+                    
+                //goal.Items.Add(foundSource);
+            }
+
+            foreach (var itemId in outdatedItemCounts)
+            {
+                if(!goal.Items.ContainsKey(itemId)) continue;
+                
+                goal.Items.Remove(itemId);
             }
         }
     }

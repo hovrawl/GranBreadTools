@@ -55,21 +55,15 @@ public class ItemsPageViewModel : MainPageViewModelBase
         };
 
         // Pass the dialog if you need to hide it from the ViewModel.
-        var viewModel = new ItemDefDialogViewModel()
-        {
-            Id = Guid.NewGuid().ToString()
-        };
+        var viewModel = new ItemDefDialogViewModel();
         
         if (existing != null)
         {
+            // If editing an existing item, update dialog
             dialog.Title = "Configure Item";
             dialog.PrimaryButtonText = "Save";
-            
-            // If editing an existing item, pre-fill details
-            viewModel.Id = existing.Id;
-            viewModel.Name = existing.Name;
-            viewModel.Icon = existing.Icon;
-            dialog.PrimaryButtonText = "Save";
+            // Change view model to the existing one
+            viewModel = existing;
         }
         
         // In our case the Content is a UserControl, but can be anything.
@@ -92,13 +86,7 @@ public class ItemsPageViewModel : MainPageViewModelBase
                 {
                     Items.Add(viewModel);
                 }
-                else
-                {
-                    // If we were editing an existing model, update its properties
-                    existing.Name = viewModel.Name;
-                    existing.Icon = viewModel.Icon;
-                }
-                
+
                 DataManager.Items().Upsert(viewModel.ToDef());
                 DataManager.Items().Save();
             }

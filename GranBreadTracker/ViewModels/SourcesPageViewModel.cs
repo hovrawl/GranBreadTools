@@ -46,28 +46,24 @@ public class SourcesPageViewModel : MainPageViewModelBase
         };
 
         // Pass the dialog if you need to hide it from the ViewModel.
-        var viewModel = new SourceDefDialogViewModel
-        {
-            Id = Guid.NewGuid().ToString()
-        };
+        var viewModel = new SourceDefDialogViewModel();
         if (existing != null)
         {
+            // If editing an existing item, update dialog
             dialog.Title = "Configure Raid";
             dialog.PrimaryButtonText = "Save";
-            
-            // If editing an existing item, pre-fill details
-            viewModel.Id = existing.Id;
-            viewModel.Name = existing.Name;
-            viewModel.Icon = existing.Icon;
-            dialog.PrimaryButtonText = "Save";
+            // Change view model to the existing one
+            viewModel = existing;
         }
-        
-        // In our case the Content is a UserControl, but can be anything.
-        dialog.Content = new SourceDefDialog()
+
+        var defDialog = new SourceDefDialog()
         {
             DataContext = viewModel
         };
-
+        // In our case the Content is a UserControl, but can be anything.
+        dialog.Content = defDialog;
+        dialog.Closed += defDialog.DialogOnClosed;
+        
         var dialogResult = await dialog.ShowAsync();
         
         if (dialogResult == ContentDialogResult.Primary)
@@ -82,12 +78,7 @@ public class SourcesPageViewModel : MainPageViewModelBase
                 {
                     Sources.Add(viewModel);
                 }
-                else
-                {
-                    // If we were editing an existing model, update its properties
-                    existing.Name = viewModel.Name;
-                    existing.Icon = viewModel.Icon;
-                }
+                
                 DataManager.ItemSources().Upsert(viewModel.ToDef());
                 DataManager.ItemSources().Save();
             }

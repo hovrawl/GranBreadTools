@@ -30,5 +30,5 @@ public class ItemSourceDef
     /// <summary>
     /// Dictionary containing Item ID + how many drops
     /// </summary>
-    public Dictionary<string, double> Items { get; set; }
+    public Dictionary<string, double> Items { get; set; } = new();
 }

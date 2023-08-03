@@ -1,4 +1,5 @@
-﻿using GranBreadTracker.ViewModels;
+﻿using System.Collections.Generic;
+using GranBreadTracker.ViewModels;
 
 namespace GranBreadTracker.Classes.Extensions;
 
@@ -31,7 +32,7 @@ public static class DataExtensions
             Id = viewModel.Id,
             Icon = viewModel.Icon,
             Name = viewModel.Name,
-            Description = viewModel. Description
+            Description = viewModel. Description,
         };
     }
     
@@ -47,7 +48,8 @@ public static class DataExtensions
             Id = itemSourceDef.Id,
             Icon = itemSourceDef.Icon,
             Name = itemSourceDef.Name,
-            Description = itemSourceDef. Description
+            Description = itemSourceDef. Description,
+            Items = itemSourceDef.Items
         };
     }
     
@@ -63,7 +65,8 @@ public static class DataExtensions
             Id = viewModel.Id,
             Icon = viewModel.Icon,
             Name = viewModel.Name,
-            Description = viewModel. Description
+            Description = viewModel. Description,
+            Items = viewModel.Items
         };
     }
     
@@ -79,7 +82,10 @@ public static class DataExtensions
             Id = goalDef.Id,
             Icon = goalDef.Icon,
             Name = goalDef.Name,
-            Description = goalDef. Description
+            Description = goalDef. Description,
+            Count = goalDef.Count,
+            Goal = goalDef.Goal,
+            Items = goalDef.Items ?? new()
         };
     }
     
@@ -95,7 +101,10 @@ public static class DataExtensions
             Id = viewModel.Id,
             Icon = viewModel.Icon,
             Name = viewModel.Name,
-            Description = viewModel. Description
+            Description = viewModel. Description,
+            Count = viewModel.Count,
+            Goal = viewModel.Goal,
+            Items = viewModel.Items ?? new()
         };
     }
 }

@@ -21,17 +21,34 @@ public partial class GranblueObjectPickerList : UserControl
     /// </summary>
     /// <param name="objects">List of objected to populate the list with</param>
     /// <param name="multiSelect">Configure list for multiselect</param>
-    public GranblueObjectPickerList(ICollection<GranblueObject> objects, bool multiSelect)
+    public GranblueObjectPickerList(ICollection<GranblueObject> objects, bool multiSelect, IEnumerable<string> selectedIds = null)
     {
         InitializeComponent();
         
         _objectPickerList = this.FindControl<ListBox>("ObjectPicker");
+
+        // Base selection
+        var selectionMode = SelectionMode.Toggle;
+
         // If the List if not for a flyout, 
         if (multiSelect)
         {
-            _objectPickerList.SelectionMode = SelectionMode.Multiple;
+            // add multi-select
+            selectionMode = selectionMode|SelectionMode.Multiple;
         }
+        else
+        {
+            // add single-select
+            selectionMode = selectionMode|SelectionMode.Single|SelectionMode.AlwaysSelected;
+        }
+        _objectPickerList.SelectionMode = selectionMode;
+        
         PreloadObjectList(objects);
+
+        if (selectedIds != null)
+        {
+            PreSelectObjects(selectedIds);
+        }
     }
 
     private void InitializeComponent()
@@ -61,6 +78,16 @@ public partial class GranblueObjectPickerList : UserControl
         {
             _objectPickerList.Items.Add(icon);
         }
+    }
+
+    private void PreSelectObjects(IEnumerable<string> selectedIds)
+    {
+        if (!selectedIds.Any()) return;
+
+        var loadedItems = _objectPickerList.Items.OfType<GranblueObject>().ToList();
+        var selectedItems = loadedItems.Where(i => selectedIds.Contains(i.Id)).ToList();
+
+        _objectPickerList.SelectedItems = selectedItems;
     }
     
     public GranblueObject GetSelectedObject()

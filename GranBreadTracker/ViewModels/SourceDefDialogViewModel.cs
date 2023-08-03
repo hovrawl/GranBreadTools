@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
 
@@ -73,12 +74,17 @@ public class SourceDefDialogViewModel: ViewModelBase
             }
         }
     }
-    
+
     /// <summary>
     /// Dictionary containing Item ID + how many drops
     /// </summary>
-    public Dictionary<string, double> Items { get; set; }
-    
+    public Dictionary<string, double> Items { get; set; } = new();
+
+    public SourceDefDialogViewModel()
+    {
+        Id = Guid.NewGuid().ToString();
+    }
+
     private void HandleNameChange(string newValue)
     {
         // can use this to check if the item name is already taken and prevent user from creating another tracker

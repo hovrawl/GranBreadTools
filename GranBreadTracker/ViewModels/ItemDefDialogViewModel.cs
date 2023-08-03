@@ -1,4 +1,5 @@
-﻿using FluentAvalonia.UI.Controls;
+﻿using System;
+using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
 
 namespace GranBreadTracker.ViewModels;
@@ -72,7 +73,12 @@ public class ItemDefDialogViewModel : ViewModelBase
             }
         }
     }
-    
+
+    public ItemDefDialogViewModel()
+    {
+        Id = Guid.NewGuid().ToString();
+    }
+
     private void HandleNameChange(string newValue)
     {
         // can use this to check if the item name is already taken and prevent user from creating another tracker

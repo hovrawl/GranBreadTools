@@ -32,5 +32,16 @@
                 </Label>
             </StackPanel>
         </StackPanel>
+        <StackPanel Spacing="10" Orientation="Horizontal"> 
+            <Label>
+                Goal
+            </Label>
+            <NumericUpDown 
+                Watermark="Goal"
+                FormatString="0"
+                Minimum="1"
+                Value="{CompiledBinding Goal}"
+                AttachedToVisualTree="InputField_OnAttachedToVisualTree" />
+        </StackPanel>
     </StackPanel>
 </UserControl>

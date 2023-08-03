@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GranBreadTracker.Classes;
 
 namespace GranBreadTracker.ViewModels;
@@ -73,10 +74,51 @@ public class GoalDefDialogViewModel: ViewModelBase
         }
     }
     
+    private long _goal;
+
+    /// <summary>
+    /// Gets or sets the Item Description
+    /// </summary>
+    public long Goal
+    {
+        get => _goal;
+        set
+        {
+            if (RaiseAndSetIfChanged(ref _goal, value))
+            {
+                //HandleDescriptionChange(_goal);
+            }
+        }
+    }
+    
+    private long _count;
+
+ 
+
+    /// <summary>
+    /// Gets or sets the Item Description
+    /// </summary>
+    public long Count
+    {
+        get => _count;
+        set
+        {
+            if (RaiseAndSetIfChanged(ref _count, value))
+            {
+                //HandleDescriptionChange(_goal);
+            }
+        }
+    }
+    
+    public GoalDefDialogViewModel()
+    {
+        Id = Guid.NewGuid().ToString();
+    }
+
     /// <summary>
     /// Dictionary containing Item ID + how many drops
     /// </summary>
-    public Dictionary<string, double> Items { get; set; }
+    public Dictionary<string, long> Items { get; set; } = new();
     
     private void HandleNameChange(string newValue)
     {

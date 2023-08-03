@@ -43,29 +43,26 @@ public class GoalPageViewModel : MainPageViewModelBase
         };
 
         // Pass the dialog if you need to hide it from the ViewModel.
-        var viewModel = new GoalDefDialogViewModel()
-        {
-            Id = Guid.NewGuid().ToString()
-        };
+        var viewModel = new GoalDefDialogViewModel();
         
         if (existing != null)
         {
+            // If editing an existing item, update dialog
             dialog.Title = "Configure Goal";
             dialog.PrimaryButtonText = "Save";
-            
-            // If editing an existing item, pre-fill details
-            viewModel.Id = existing.Id;
-            viewModel.Name = existing.Name;
-            viewModel.Icon = existing.Icon;
-            dialog.PrimaryButtonText = "Save";
+            // Change view model to the existing one
+            viewModel = existing;
         }
         
         // In our case the Content is a UserControl, but can be anything.
-        dialog.Content = new GoalDefDialog
+        var goalDefDialog = new GoalDefDialog
         {
             DataContext = viewModel
         };
+        dialog.Content = goalDefDialog;
 
+        dialog.Closed += goalDefDialog.DialogOnClosed;
+        
         var dialogResult = await dialog.ShowAsync();
         
         if (dialogResult == ContentDialogResult.Primary)
@@ -79,12 +76,6 @@ public class GoalPageViewModel : MainPageViewModelBase
                 if (existing == null)
                 {
                     Goals.Add(viewModel);
-                }
-                else
-                {
-                    // If we were editing an existing model, update its properties
-                    existing.Name = viewModel.Name;
-                    existing.Icon = viewModel.Icon;
                 }
                 
                 DataManager.Goals().Upsert(viewModel.ToDef());

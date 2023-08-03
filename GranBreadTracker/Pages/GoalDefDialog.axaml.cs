@@ -1,9 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
 using Avalonia.Threading;
+using FluentAvalonia.Core;
+using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
 using GranBreadTracker.Controls;
 using GranBreadTracker.ViewModels;
@@ -14,6 +19,9 @@ public partial class GoalDefDialog : UserControl
 {
     public ICollection<GranblueObject> SelectedItems { get; set; } = new List<GranblueObject>();
 
+    public TypedEventHandler<ContentDialog, ContentDialogClosedEventArgs> OnDialogClose;
+
+    private GranblueObjectPickerList _pickerList;
     
     public GoalDefDialog()
     {
@@ -66,20 +74,53 @@ public partial class GoalDefDialog : UserControl
     private void ItemListPanel_OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
     {
         if (sender is not StackPanel panel) return;
-        
-        var viewModel = new GranblueObjectPickerViewModel(GranblueObjectType.Item);
-        viewModel.InitializeData();
-        
-        var pickerList = new GranblueObjectPickerList(viewModel.GranblueObjects, true);
-        panel.Children.Add(pickerList);
+        if (DataContext is not GoalDefDialogViewModel vm) return;
 
+        var objectPickerVm = new GranblueObjectPickerViewModel(GranblueObjectType.Item);
+        objectPickerVm.InitializeData();
 
+        var selectedIds = vm.Items.Select(i => i.Key);
         
-        pickerList.ObjectPickerSelectEventHandler += (sender, args) =>
+        _pickerList = new GranblueObjectPickerList(objectPickerVm.GranblueObjects, true, selectedIds);
+        panel.Children.Add(_pickerList);
+
+        // _pickerList.ObjectPickerSelectEventHandler += (sender, args) =>
+        // {
+        //     var selectedObjects = _pickerList.GetSelectedObjects();
+        //     SelectedItems = selectedObjects;
+        // };
+    }
+    
+    public void DialogOnClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
+    {
+        sender.Closed -= DialogOnClosed;
+        if (DataContext is not GoalDefDialogViewModel vm) return;
+
+        var selectedItems = _pickerList.GetSelectedObjects();
+        
+        var selectedIds = selectedItems.Select(i => i.Id);
+
+        var itemToRemove = new List<string>();
+        foreach (var keyPair in vm.Items)
         {
-            var selectedObjects = pickerList.GetSelectedObjects();
-
-            SelectedItems = selectedObjects;
-        };
+            if (!selectedIds.Contains(keyPair.Key))
+            {
+                itemToRemove.Add(keyPair.Key);
+            }
+        }
+            
+        foreach (var item in SelectedItems)
+        {
+            if (vm.Items.ContainsKey(item.Id))
+            {
+                continue;
+            }
+                
+            vm.Items.Add(item.Id, 0);
+        }
+        foreach (var key in itemToRemove)
+        {
+            vm.Items.Remove(key);
+        }
     }
 }
