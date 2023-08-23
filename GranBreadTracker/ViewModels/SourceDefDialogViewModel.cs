@@ -78,7 +78,13 @@ public class SourceDefDialogViewModel: ViewModelBase
     /// <summary>
     /// Dictionary containing Item ID + how many drops
     /// </summary>
-    public Dictionary<string, double> Items { get; set; } = new();
+    public Dictionary<string, double> Drops { get; set; } = new();
+
+    
+    /// <summary>
+    /// Dictionary containing Item ID + how many drops
+    /// </summary>
+    public Dictionary<string, double> BlueChest { get; set; } = new();
 
     public SourceDefDialogViewModel()
     {
@@ -102,9 +108,9 @@ public class SourceDefDialogViewModel: ViewModelBase
     /// <param name="countChange">integer change for item count, positive for increase, negative for decrease</param>
     public void UpdateItemCount(string itemId, int countChange)
     {
-        if (!Items.ContainsKey(itemId)) return;
-        var value = Items[itemId];
+        if (!BlueChest.ContainsKey(itemId)) return;
+        var value = BlueChest[itemId];
         var updatedValue = value + countChange;
-        Items[itemId] = updatedValue;
+        BlueChest[itemId] = updatedValue;
     }
 }

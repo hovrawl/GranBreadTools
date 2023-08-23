@@ -49,7 +49,8 @@ public static class DataExtensions
             Icon = itemSourceDef.Icon,
             Name = itemSourceDef.Name,
             Description = itemSourceDef. Description,
-            Items = itemSourceDef.Items
+            BlueChest = itemSourceDef.BlueChest,
+            Drops = itemSourceDef.Drops,
         };
     }
     
@@ -66,7 +67,8 @@ public static class DataExtensions
             Icon = viewModel.Icon,
             Name = viewModel.Name,
             Description = viewModel. Description,
-            Items = viewModel.Items
+            BlueChest = viewModel.BlueChest,
+            Drops = viewModel.Drops
         };
     }
     
@@ -105,6 +107,53 @@ public static class DataExtensions
             Count = viewModel.Count,
             Goal = viewModel.Goal,
             Items = viewModel.Items ?? new()
+        };
+    }
+    
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="goalDef"></param>
+    /// <returns></returns>
+    public static ItemTrackerDefDialogViewModel ToViewModel(this ItemTrackerDef trackerDef)
+    {
+        return new ItemTrackerDefDialogViewModel
+        {
+            Id = trackerDef.Id,
+            Icon = trackerDef.Icon,
+            Name = trackerDef.Name,
+            Description = trackerDef.Description,
+            SourceIds = trackerDef.SourceIds ?? new (),
+        };
+    }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="viewModel"></param>
+    /// <returns></returns>
+    public static ItemTrackerDef ToDef(this ItemTrackerDefDialogViewModel viewModel)
+    {
+        return new ItemTrackerDef
+        {
+            Id = viewModel.Id,
+            Icon = viewModel.Icon,
+            Name = viewModel.Name,
+            Description = viewModel. Description,
+            SourceIds = viewModel.SourceIds ?? new(),
+        };
+    }
+    
+    public static ItemTrackerDefDialogViewModel ToDialogViewModel(this ItemTrackerPageViewModel viewModel)
+    {
+        return new ItemTrackerDefDialogViewModel
+        {
+            Id = viewModel.ItemTrackerDef.Id,
+            Icon = viewModel.ItemTrackerDef.Icon,
+            Name = viewModel.ItemTrackerDef.Name,
+            Description = viewModel.ItemTrackerDef. Description,
+            SourceIds = viewModel.ItemTrackerDef.SourceIds ?? new(),
         };
     }
 }

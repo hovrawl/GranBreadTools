@@ -73,7 +73,7 @@ public class SourcesPageViewModel : MainPageViewModelBase
             var itemName = newItemViewModel.Name;
             if (!string.IsNullOrEmpty(itemName))
             {
-                // If we had added an item and it wasnt existed, add to view model, otherwise it will update
+                // If we had added a source and it wasnt existed, add to view model, otherwise it will update
                 if (existing == null)
                 {
                     Sources.Add(viewModel);

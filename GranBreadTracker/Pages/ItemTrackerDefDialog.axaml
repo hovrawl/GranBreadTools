@@ -5,18 +5,22 @@
              xmlns:vm="using:GranBreadTracker.ViewModels"
              xmlns:controls="using:GranBreadTracker.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vm:NewItemTrackerDialogViewModel"
-             x:Class="GranBreadTracker.Pages.NewItemTrackerDialog">
+             x:DataType="vm:ItemTrackerDefDialogViewModel"
+             x:Class="GranBreadTracker.Pages.ItemTrackerDefDialog">
     <StackPanel Spacing="10" MinWidth="400" Orientation="Vertical">
         <Label>
-            Item Name
+            Tracker Name
         </Label>
         <TextBox 
-                 Watermark="Item Name"
+                 Watermark="Tracker Name"
                  Text="{CompiledBinding Name}"
                  AttachedToVisualTree="InputField_OnAttachedToVisualTree" />
         
-        <controls:GranblueIconPicker AttachedToVisualTree="IconPicker_OnAttachedToVisualTree"/>
-        
+        <StackPanel Spacing="10" Orientation="Vertical"> 
+            <Label>
+                Icon
+            </Label>
+            <controls:GranblueIconPicker AttachedToVisualTree="IconPicker_OnAttachedToVisualTree" />
+        </StackPanel>
     </StackPanel>
 </UserControl>

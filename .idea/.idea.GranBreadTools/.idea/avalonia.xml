@@ -19,6 +19,7 @@
         <entry key="GranBreadTracker/Pages/HomePage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/ItemDefDialog.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/ItemSourcePage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
+        <entry key="GranBreadTracker/Pages/ItemTrackerDefDialog.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/ItemTrackerPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/ItemTrackerPageTemplate.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />
         <entry key="GranBreadTracker/Pages/ItemsPage.axaml" value="GranBreadTracker/GranBreadTracker.csproj" />

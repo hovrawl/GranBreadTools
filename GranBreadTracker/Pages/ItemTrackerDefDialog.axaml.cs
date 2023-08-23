@@ -1,17 +1,20 @@
-﻿using Avalonia;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using FluentAvalonia.UI.Controls;
+using GranBreadTracker.Classes;
 using GranBreadTracker.Controls;
 using GranBreadTracker.ViewModels;
 
 namespace GranBreadTracker.Pages;
 
-public partial class NewItemTrackerDialog : UserControl
+public partial class ItemTrackerDefDialog : UserControl
 {
-    public NewItemTrackerDialog()
+    public ItemTrackerDefDialog()
     {
         InitializeComponent();
     }
@@ -20,6 +23,9 @@ public partial class NewItemTrackerDialog : UserControl
     {
         AvaloniaXamlLoader.Load(this);
     }
+    
+    private GranblueObjectPickerList _pickerList;
+
     
     private void InputField_OnAttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)
     {
@@ -39,7 +45,7 @@ public partial class NewItemTrackerDialog : UserControl
         if (sender is not GranblueIconPicker iconPicker) return;
         if (iconPicker.DataContext is not GranblueIconPickerViewModel vm) return;
 
-        var dialogContext = DataContext as NewItemTrackerDialogViewModel;
+        var dialogContext = DataContext as ItemTrackerDefDialogViewModel;
 
         vm.IconChanged += (o, args) =>
         {
@@ -50,7 +56,8 @@ public partial class NewItemTrackerDialog : UserControl
         {
             var icon = dialogContext.Icon;
             vm.Icon = icon;
-            vm.SetIcon(icon);        }
+            vm.SetIcon(icon);
+        }
         else
         {
             dialogContext.Icon = vm.Icon;

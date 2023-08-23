@@ -23,12 +23,17 @@ public class ItemSourceDef
     public string Description { get; set; }
     
     /// <summary>
-    /// GranBreadIcon def that includes ItemKey and ItemType
+    /// GranBreadIcon def that includes IconKey and IconType
     /// </summary>
     public GranBreadIcon Icon { get; set; }
 
     /// <summary>
     /// Dictionary containing Item ID + how many drops
     /// </summary>
-    public Dictionary<string, double> Items { get; set; } = new();
+    public Dictionary<string, double> Drops { get; set; } = new();
+    
+    /// <summary>
+    /// Dictionary containing Item ID + how many drops
+    /// </summary>
+    public Dictionary<string, double> BlueChest { get; set; } = new();
 }

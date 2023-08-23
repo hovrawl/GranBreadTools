@@ -1,32 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
 
 namespace GranBreadTracker.ViewModels;
 
-public class NewItemTrackerDialogViewModel : ViewModelBase
+public class ItemTrackerDefDialogViewModel : ViewModelBase
 {
-    private readonly ContentDialog dialog;
 
-    public NewItemTrackerDialogViewModel(ContentDialog dialog)
+    public ItemTrackerDefDialogViewModel()
     {
-        if (dialog is null)
-        {
-            throw new ArgumentNullException(nameof(dialog));
-        }
-
-        this.dialog = dialog;
-        dialog.Closed += DialogOnClosed;
+        Id = Guid.NewGuid().ToString();
     }
 
-    private void DialogOnClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
-    {
-        dialog.Closed -= DialogOnClosed;
-
-        
-        var result = args.Result;
-    }
 
     private string _id;
 
@@ -95,14 +82,8 @@ public class NewItemTrackerDialogViewModel : ViewModelBase
         }
     }
 
-    public ItemTrackerDef ToDef()
-    {
-        return new ItemTrackerDef
-        {
-            Id = Id,
-            Name = Name,
-            Description = Description,
-            Icon = Icon,
-        };
-    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public List<string> SourceIds { get; set; }
 }

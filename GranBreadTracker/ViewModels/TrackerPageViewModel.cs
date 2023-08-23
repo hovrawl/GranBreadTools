@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
 using GranBreadTracker.Classes.Data;
+using GranBreadTracker.Classes.Extensions;
 using GranBreadTracker.Pages;
 
 namespace GranBreadTracker.ViewModels;
@@ -48,20 +49,19 @@ public class TrackerPageViewModel : MainPageViewModelBase
         };
 
         // Pass the dialog if you need to hide it from the ViewModel.
-        var viewModel = new NewItemTrackerDialogViewModel(dialog)
-        {
-            Id = Guid.NewGuid().ToString()
-        };
+        var viewModel = new ItemTrackerDefDialogViewModel();
         
         if (existing != null)
         {
-            viewModel.Id = existing.ItemTrackerDef.Id;
-            viewModel.Name = existing.ItemTrackerDef.Name;
-            viewModel.Icon = existing.ItemTrackerDef.Icon;
+            // If editing an existing item, update dialog
+            dialog.Title = "Configure Tracker";
+            dialog.PrimaryButtonText = "Save";
+            // Change view model to the existing one
+            viewModel = existing.ToDialogViewModel();
         }
 
         // In our case the Content is a UserControl, but can be anything.
-        dialog.Content = new NewItemTrackerDialog()
+        dialog.Content = new ItemTrackerDefDialog()
         {
             DataContext = viewModel
         };
@@ -70,8 +70,8 @@ public class TrackerPageViewModel : MainPageViewModelBase
         
         if (dialogResult == ContentDialogResult.Primary)
         {
-            var newItemDialog = dialog.Content as NewItemTrackerDialog;
-            var newItemViewModel = newItemDialog.DataContext as NewItemTrackerDialogViewModel;
+            var newItemDialog = dialog.Content as ItemTrackerDefDialog;
+            var newItemViewModel = newItemDialog.DataContext as ItemTrackerDefDialogViewModel;
             var itemName = newItemViewModel.Name;
             if (!string.IsNullOrEmpty(itemName))
             {
@@ -81,14 +81,7 @@ public class TrackerPageViewModel : MainPageViewModelBase
                     returnDef.Sources = new ObservableCollection<ItemSourceDef>();
                     Items.Add(returnDef.ToViewModel());
                 }
-                else
-                {
-                    // If we have an existing item tracker def, we will update its values
-                    returnDef = existing.ItemTrackerDef;
-                    returnDef.Icon = newItemViewModel.Icon;
-                    returnDef.Name = newItemViewModel.Name;
-                    returnDef.Description = newItemViewModel.Description;
-                }
+              
                 
                 DataManager.ItemTrackerDefs().Upsert(returnDef);
                 DataManager.ItemTrackerDefs().Save();

@@ -25,9 +25,16 @@
                 <controls:GranblueIconPicker AttachedToVisualTree="IconPicker_OnAttachedToVisualTree" />
             </StackPanel>
             <StackPanel Spacing="10" Orientation="Vertical"> 
-                <StackPanel Name="ItemListPanel" AttachedToVisualTree="ItemListPanel_OnAttachedToVisualTree">
+                <StackPanel Name="DropListPanel" AttachedToVisualTree="DropListPanel_OnAttachedToVisualTree">
                     <Label>
-                        Items
+                        Drops
+                    </Label>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Spacing="10" Orientation="Vertical"> 
+                <StackPanel Name="BlueChestListPanel" AttachedToVisualTree="BlueChestListPanel_OnAttachedToVisualTree">
+                    <Label>
+                        Blue Chest
                     </Label>
                 </StackPanel>
             </StackPanel>

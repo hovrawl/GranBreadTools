@@ -25,6 +25,7 @@ public partial class SourceDefDialog : UserControl
     }
     
     private GranblueObjectPickerList _pickerList;
+    private GranblueObjectPickerList _blueChestList;
 
     
     public ICollection<GranblueObject> SelectedItems { get; set; } = new List<GranblueObject>();
@@ -67,15 +68,17 @@ public partial class SourceDefDialog : UserControl
         }
     }
 
-    private void ItemListPanel_OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
+    private void DropListPanel_OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
     {
         if (sender is not StackPanel panel) return;
-        if (DataContext is not GoalDefDialogViewModel vm) return;
+        if (DataContext is not SourceDefDialogViewModel vm) return;
 
         var objectPickerVm = new GranblueObjectPickerViewModel(GranblueObjectType.Item);
         objectPickerVm.InitializeData();
         
-        _pickerList = new GranblueObjectPickerList(objectPickerVm.GranblueObjects, true);
+        var selectedIds = vm.Drops.Select(i => i.Key);
+ 
+        _pickerList = new GranblueObjectPickerList(objectPickerVm.GranblueObjects, true, selectedIds);
         panel.Children.Add(_pickerList);
         
         // pickerList.ObjectPickerSelectEventHandler += (sender, args) =>
@@ -85,17 +88,30 @@ public partial class SourceDefDialog : UserControl
         // };
     }
 
+    private void BlueChestListPanel_OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
+    {
+        if (sender is not StackPanel panel) return;
+        if (DataContext is not SourceDefDialogViewModel vm) return;
+
+        var objectPickerVm = new GranblueObjectPickerViewModel(GranblueObjectType.Item);
+        objectPickerVm.InitializeData();
+        
+        var selectedIds = vm.BlueChest.Select(i => i.Key);
+        _blueChestList = new GranblueObjectPickerList(objectPickerVm.GranblueObjects, true, selectedIds);
+        panel.Children.Add(_blueChestList);
+    }
     
     public void DialogOnClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
     {
         sender.Closed -= DialogOnClosed;
-        if (DataContext is not GoalDefDialogViewModel vm) return;
+        if (DataContext is not SourceDefDialogViewModel vm) return;
         
         var selectedItems = _pickerList.GetSelectedObjects();
         var selectedIds = selectedItems.Select(i => i.Id);
 
+        // Drops
         var itemToRemove = new List<string>();
-        foreach (var keyPair in vm.Items)
+        foreach (var keyPair in vm.Drops)
         {
             if (!selectedIds.Contains(keyPair.Key))
             {
@@ -103,18 +119,46 @@ public partial class SourceDefDialog : UserControl
             }
         }
             
-        foreach (var item in SelectedItems)
+        foreach (var item in selectedItems)
         {
-            if (vm.Items.ContainsKey(item.Id))
+            if (vm.Drops.ContainsKey(item.Id))
             {
                 continue;
             }
                 
-            vm.Items.Add(item.Id, 0);
+            vm.Drops.Add(item.Id, 0);
         }
+        
         foreach (var key in itemToRemove)
         {
-            vm.Items.Remove(key);
+            vm.Drops.Remove(key);
+        }
+        
+        // Blue Chest
+        selectedItems = _blueChestList.GetSelectedObjects();
+        selectedIds = selectedItems.Select(i => i.Id);
+        itemToRemove = new List<string>();
+        foreach (var keyPair in vm.BlueChest)
+        {
+            if (!selectedIds.Contains(keyPair.Key))
+            {
+                itemToRemove.Add(keyPair.Key);
+            }
+        }
+            
+        foreach (var item in selectedItems)
+        {
+            if (vm.BlueChest.ContainsKey(item.Id))
+            {
+                continue;
+            }
+                
+            vm.BlueChest.Add(item.Id, 0);
+        }
+        
+        foreach (var key in itemToRemove)
+        {
+            vm.BlueChest.Remove(key);
         }
     }
 }
