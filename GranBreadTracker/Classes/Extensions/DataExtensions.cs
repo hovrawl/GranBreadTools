@@ -36,6 +36,23 @@ public static class DataExtensions
         };
     }
     
+    /// <summary>
+    /// Counter for Item Def
+    /// </summary>
+    /// <param name="itemDef"></param>
+    /// <returns></returns>
+    public static ItemCounter ToCounter(this ItemDef itemDef)
+    {
+        return new ItemCounter
+        {
+            Id = itemDef.Id,
+            Icon = itemDef.Icon,
+            Name = itemDef.Name,
+            Count = 0,
+            DropRate = 0,
+        };
+    }
+    
     
     /// <summary>
     /// Get this item source as a view model

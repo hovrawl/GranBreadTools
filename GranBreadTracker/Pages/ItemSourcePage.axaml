@@ -4,12 +4,50 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:GranBreadTracker.ViewModels"
              xmlns:classes="using:GranBreadTracker.Classes"
+             xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
              x:DataType="vm:ItemSourcePageViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GranBreadTracker.Pages.ItemSourcePage">
-    <StackPanel>
-        <TextBlock>
-            
-        </TextBlock>
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Vertical">
+            <TextBlock>Item Drops</TextBlock>
+            <ListBox Name="ItemList" SelectionChanged="ItemList_OnSelectionChanged" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="classes:ItemCounter" >
+                        <StackPanel Orientation="Vertical">
+                            <controls:IconSourceElement IconSource="{Binding Icon.IconSource}" Width="50" Height="50"/>
+                            <TextBlock Text="{CompiledBinding Name}"></TextBlock>
+                            <TextBlock Text="{CompiledBinding Count}"></TextBlock>
+                            <TextBlock Text="{CompiledBinding DropRate}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel MaxWidth="300"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <TextBlock>Blue Chest Drops</TextBlock>
+            <ListBox Name="BlueChestList" SelectionChanged="BlueChestList_OnSelectionChanged" AttachedToVisualTree="BlueChestList_OnAttachedToVisualTree">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="classes:ItemCounter" >
+                        <StackPanel Orientation="Vertical">
+                            <controls:IconSourceElement IconSource="{CompiledBinding Icon.IconSource}" Width="50" Height="50"/>
+                            <TextBlock Text="{CompiledBinding Name}"></TextBlock>                        
+                            <TextBlock Text="{CompiledBinding Count}"></TextBlock>
+                            <TextBlock Text="{CompiledBinding DropRate}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel MaxWidth="300"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </StackPanel>
     </StackPanel>
 </UserControl>
