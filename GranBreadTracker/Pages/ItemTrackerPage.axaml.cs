@@ -1,10 +1,12 @@
 ﻿using System.Collections.Specialized;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using FluentAvalonia.Core;
 using FluentAvalonia.UI.Controls;
 using GranBreadTracker.Classes;
+using GranBreadTracker.Classes.Data;
 using GranBreadTracker.ViewModels;
 
 namespace GranBreadTracker.Pages;
@@ -26,13 +28,43 @@ public partial class ItemTrackerPage : UserControl
         
     }
 
-    private void BindingTabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+    private async void BindingTabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
     {
-        // Remove item from view model
-        (DataContext as ItemTrackerPageViewModel).Sources.Remove(args.Item as ItemSourcePageViewModel);
+        if (args.Item is not ItemSourcePageViewModel sourceVm) return;
+        if (DataContext is not ItemTrackerPageViewModel trackerVm) return;
+
+        // Prompt if user wants to remove
+        var dialog = new ContentDialog
+        {
+            Title = "Remove Raid",
+            PrimaryButtonText = "Remove",
+            CloseButtonText = "Cancel",
+            Content = $"Are you sure you wish to remove: {sourceVm.Source.Name}?"
+        };
         
-        // Need to save collection back to settings after removal 
-        // TODO - Save state of item trackers
+        var dialogResult = await dialog.ShowAsync();
+        if (dialogResult != ContentDialogResult.Primary)
+        {
+            // User cancel
+            return;
+        }
+        
+        var trackerDef = trackerVm.ItemTrackerDef;
+        var sourceId = sourceVm.Source.Id;
+        
+        // Remove item from view model
+        trackerVm.Sources.Remove(sourceVm);
+
+        // remove source model
+        var existingSourceModel = trackerDef.Sources.FirstOrDefault(i => i.Id.Equals(sourceId));
+        if (existingSourceModel != null) trackerDef.Sources.Remove(existingSourceModel);
+
+        // remove source id
+        trackerDef.SourceIds.Remove(sourceId);
+        
+        // upsert
+        DataManager.ItemTrackerDefs().Upsert(trackerVm.ItemTrackerDef);
+        DataManager.ItemTrackerDefs().Save();
     }
 
     private void TabView_OnTabItemsChanged(TabView sender, NotifyCollectionChangedEventArgs args)
