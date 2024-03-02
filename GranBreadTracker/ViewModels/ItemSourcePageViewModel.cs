@@ -13,7 +13,7 @@ public class ItemSourcePageViewModel : ViewModelBase
     public List<ItemCounter> Drops { get; } = new ();
     public List<ItemCounter> BlueChest { get; } = new ();
     
-    public GeneralCommand ItemClickCommand { get; }
+    public PointerCommand ItemClickCommand { get; }
 
     
     public ItemSourcePageViewModel(ItemSourceDef source)
@@ -37,18 +37,22 @@ public class ItemSourcePageViewModel : ViewModelBase
             BlueChest.Add(existingItem.ToCounter());
         }
         
-        ItemClickCommand = new GeneralCommand(ItemClicked);
+        ItemClickCommand = new PointerCommand(ItemClicked);
 
     }
 
 
-    private void ItemClicked(object item)
+    private void ItemClicked(object item, bool isPrimary)
     {
         if (item is not ItemCounter itemCounter) return;
         
         // increment item count
         var existingItemId = Source.Drops.ContainsKey(itemCounter.Id);
 
-        itemCounter.Count++;
+        if (isPrimary) itemCounter.Count++;
+        else if (!isPrimary) itemCounter.Count--;
+
+        // Stop decrementing after 0
+        if (itemCounter.Count < 0) itemCounter.Count = 0;
     }
 }

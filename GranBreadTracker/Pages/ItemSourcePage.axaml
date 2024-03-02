@@ -31,7 +31,11 @@
         </StackPanel>
         <StackPanel Orientation="Vertical">
             <TextBlock>Blue Chest Drops</TextBlock>
-            <ListBox Name="BlueChestList" SelectionChanged="BlueChestList_OnSelectionChanged" AttachedToVisualTree="BlueChestList_OnAttachedToVisualTree">
+            <ListBox Name="BlueChestList" 
+                     SelectionChanged="BlueChestList_OnSelectionChanged" 
+                     AttachedToVisualTree="BlueChestList_OnAttachedToVisualTree"
+                     PointerReleased="BlueChestList_OnPointerReleased"
+                     Tapped="BlueChestList_OnTapped">
                 <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="classes:ItemCounter" >
                         <StackPanel Orientation="Vertical">
