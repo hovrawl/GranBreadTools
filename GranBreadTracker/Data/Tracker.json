@@ -1,2 +1,12 @@
 [
+  {
+    "Id":"7b4340dc-ced1-4867-8c4d-5dc9002f70a8",
+    "Name":"Gold Bar",
+    "Description":null,
+    "Icon":{
+      "IconKey":"GoldBarIcon",
+      "IconType":1
+    },
+    "SourceIds": ["793CF154-A316-451A-8C77-90B21C5971AD"]
+  }
 ]

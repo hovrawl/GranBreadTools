@@ -5,6 +5,12 @@
     "Icon" : {
       "IconKey": "PBHLIcon",
       "IconType": 2
+    },
+    "Drops": {
+      "6C4F384A-A3B4-49C8-A1AC-B3238116CC79": 0
+    },
+    "BlueChest": {
+      "98f40bd2-29eb-4919-991c-643ee090a581": 0
     }
   }
 ]
