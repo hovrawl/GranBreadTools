@@ -56,21 +56,45 @@ public partial class ItemSourcePage : UserControl
     
     private void ItemList_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
+        // if (sender is not ListBox listBox) return;
+        //
+        // // Cache selected value before clearing 
+        // var itemCounter = listBox.SelectedValue as ItemCounter;
+        //
+        // // Clear list selection so event can be triggered on every selection
+        // listBox.SelectedItems.Clear();
+        //
+        // if (DataContext is not ItemSourcePageViewModel vm) return;
+        // if (itemCounter == null) return;
+        //
+        // // Execute Item Def command
+        // vm.ItemClickCommand.Execute(itemCounter);
+
+       
+    }
+
+    private void ItemList_OnPointerReleased(object? sender, PointerReleasedEventArgs e)
+    {
+        if (e.InitialPressMouseButton != MouseButton.Left && e.InitialPressMouseButton != MouseButton.Right)
+        {
+            // Only allow Left or Right mouse button
+            return;
+        }
+        
         if (sender is not ListBox listBox) return;
 
-        // Cache selected value before clearing 
         var itemCounter = listBox.SelectedValue as ItemCounter;
-        
+
         // Clear list selection so event can be triggered on every selection
-        listBox.SelectedItems.Clear();
+        listBox.SelectedItems?.Clear();
         
         if (DataContext is not ItemSourcePageViewModel vm) return;
         if (itemCounter == null) return;
 
         // Execute Item Def command
+        vm.ItemClickCommand.IsPrimary = e.InitialPressMouseButton == MouseButton.Left;
+        
         vm.ItemClickCommand.Execute(itemCounter);
-
-       
     }
 
     private void BlueChestList_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -135,4 +159,6 @@ public partial class ItemSourcePage : UserControl
         
         vm.ItemClickCommand.Execute(itemCounter);
     }
+
+   
 }

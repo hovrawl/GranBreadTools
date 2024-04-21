@@ -11,7 +11,10 @@
     <StackPanel Orientation="Horizontal">
         <StackPanel Orientation="Vertical">
             <TextBlock>Item Drops</TextBlock>
-            <ListBox Name="ItemList" SelectionChanged="ItemList_OnSelectionChanged" >
+            <ListBox Name="ItemList" 
+                     SelectionChanged="ItemList_OnSelectionChanged" 
+                     PointerReleased="ItemList_OnPointerReleased"
+                     >
                 <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="classes:ItemCounter" >
                         <StackPanel Orientation="Vertical">
